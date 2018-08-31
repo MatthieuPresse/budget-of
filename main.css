@@ -83,8 +83,12 @@ h1 {
     font-style: normal;
     font-weight: bold;
     color: #d5c9a5;
+    bottom: 0;
 }
-
+.actual-size.has-error {
+    z-index: 12;
+    background: rgba(200, 0, 0, 0.3);
+}
 .b-cat-list {
     list-style: none;
     padding: 0;
@@ -100,11 +104,16 @@ h1 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-width: 35px !important;
     width: 100%;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.5);
-    transition: width 0.3s ease-in-out;
+    height: 75px;
+    overflow: hidden;
+    transition: all .3s ease-in-out;
+    min-width: 15px;
+}
+.b-cat:hover {
+
 }
 .b-cat label {
     padding-top: 1rem;
@@ -139,17 +148,27 @@ h1 {
 .b-cat-css {
     background: #F9ECC5;
 }
-.b-cat-js {
+.b-cat-stats {
     background: #EF944D;
 }
-.b-cat-img {
+.b-cat-stats.odd {
+    background: #e77114;
+}
+.b-cat-metier {
     background: #EBC050;
 }
-.b-cat-fonts {
+.b-cat-metier.odd {
+    background: #e1aa19;
+}
+.b-cat-social {
     background: #598FC2;
 }
 .b-cat-ads {
     background: #777;
+    color: rgba(255, 255, 255, 0.7);
+}
+.b-cat-ads.odd {
+    background: #5f5f5f;
     color: rgba(255, 255, 255, 0.7);
 }
 .b-cat-ads input {
