@@ -31,15 +31,15 @@ h1 {
     position: relative;
     padding-bottom: 0.5rem;
     display: flex;
+    z-index: 12;
 }
 
 .b-size {
     position: absolute;
-    top: -1rem;
+    bottom: -27px;
     right: 0;
     display: block;
-    padding: 0 0.5rem 3rem 0;
-    border-right: 1px dashed #d5c9a5;
+    padding: 0;
     font-size: 80%;
     font-style: normal;
     font-weight: bold;
@@ -67,7 +67,7 @@ h1 {
 
 .actual-size {
     position: absolute;
-    top: -1.5rem;
+    top: 1rem;
     right: 0;
     display: block;
     padding: 0 0.5rem 1rem 0;
@@ -77,13 +77,14 @@ h1 {
     font-weight: bold;
     color: #d5c9a5;
     bottom: 75px;
+    text-align: right;
 }
 .actual-size.has-error {
-    z-index: 12;
-    background: repeating-linear-gradient(45deg, #a11, #a11 10px, #f0f0f0 10px, #f0f0f0 20px);
+    z-index: 1210;
+    background: repeating-linear-gradient(45deg, #a92101, #a92101 10px, #f0f0f0 10px, #f0f0f0 20px);
 }
 .actual-size.has-error::before {
-    border-left: 1px dashed #d5c9a5;
+    border-left: 3px dashed #581000;
     content: "";
     left: 0;
     bottom: -100px;
@@ -117,9 +118,15 @@ h1 {
     position: relative;
     min-width: 11px;
 }
-
+[data-onhover]:hover {
+    cursor: pointer;
+}
 .tooltip {
+    transition: all 0.3s ease-in-out;
+    left: 0;
+    top: 0;
     width: 50%;
+    min-width: 700px;
     background-color: lightgrey;
     color: #000;
     text-align: center;
@@ -142,11 +149,14 @@ h1 {
 .tooltip ul {
     padding: 10px 25px;
     list-style-type: none;
+    
+    max-height: 80vh;
+    overflow: auto;
 }
 
 .tooltip a {
     text-overflow: ellipsis;
-    max-width: 600px;
+    max-width: 530px;
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
@@ -306,5 +316,23 @@ footer a:hover, footer a:focus {
     40%, 60% {
         -webkit-transform: translate3d(4px, 0, 0);
                         transform: translate3d(4px, 0, 0);
+    }
+}
+@media screen and (max-width: 767px) {
+    /* mobile only */
+    .b-title {
+        margin: 0 0.2em 25px;
+    }
+    .b-size {
+        top: 105px;
+    }
+    .tooltip {
+        min-width: 80%;
+    }
+    .tooltip a {
+        max-width: calc(100% - 120px);
+    }
+    .actual-size {
+        top: 41px;
     }
 }
