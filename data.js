@@ -35,29 +35,11 @@ window.data_budget = [
 ]
 window.data_mesures = [
     {
-        catname: 'html',
-        list: [
-            {
-                name: 'OF',
-                mesures: {
-                    PAGE_HOME: {
-                        TYPE_REQUEST: 20,
-                        TYPE_WEIGHT: 483,
-                    },
-                    PAGE_DA: {
-                        TYPE_REQUEST: 30,
-                        TYPE_WEIGHT: 444,
-                    },
-
-                }
-            },
-        ]
-    },
-    {
         catname: 'metier',
         list: [
             {
                 name: 'abtasty',
+                filter: ['abtasty.com'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 1,
@@ -72,6 +54,7 @@ window.data_mesures = [
             },
             {
                 name: 'liveintercept',
+                filter: ['liveintercept.com'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 18 ,
@@ -86,6 +69,7 @@ window.data_mesures = [
             },
             {
                 name: 'batch',
+                filter: ['batch.com'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 18,
@@ -100,6 +84,7 @@ window.data_mesures = [
             },
             {
                 name: 'revive',
+                filter: ['of-ajs-autopromo.php'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 0,
@@ -119,6 +104,7 @@ window.data_mesures = [
         list: [
             {
                 name: 'Google Analytics',
+                filter: ['google-analytics.com'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 3,
@@ -133,6 +119,7 @@ window.data_mesures = [
             },
             {
                 name: 'xiti',
+                filter: ['xiti'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 2,
@@ -147,6 +134,7 @@ window.data_mesures = [
             },
             {
                 name: 'mpulse',
+                filter: ['mpulse'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 2,
@@ -161,6 +149,7 @@ window.data_mesures = [
             },
             {
                 name: 'mediego',
+                filter: ['mediego'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 1,
@@ -175,20 +164,7 @@ window.data_mesures = [
             },
             {
                 name: 'content square',
-                mesures: {
-                    PAGE_HOME: {
-                        TYPE_REQUEST: 1,
-                        TYPE_WEIGHT: 26,
-                    },
-                    PAGE_DA: {
-                        TYPE_REQUEST: 1,
-                        TYPE_WEIGHT: 26,
-                    },
-
-                }
-            },
-            {
-                name: 'content square',
+                filter: ['contentsquare'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 1,
@@ -203,6 +179,7 @@ window.data_mesures = [
             },
             {
                 name: 'datadome',
+                filter: ['datadome'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 2,
@@ -217,6 +194,7 @@ window.data_mesures = [
             },
             {
                 name: 'myfeelback',
+                filter: ['kxcdn'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 1,
@@ -231,6 +209,7 @@ window.data_mesures = [
             },
             {
                 name: 'ownpage',
+                filter: ['ownpage'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 0,
@@ -245,6 +224,7 @@ window.data_mesures = [
             },
             {
                 name: 'onfocus',
+                filter: ['onfocus'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 2,
@@ -259,6 +239,7 @@ window.data_mesures = [
             },
             {
                 name: 'nuggad',
+                filter: ['nuggad'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 1,
@@ -273,6 +254,25 @@ window.data_mesures = [
             },
             {
                 name: 'perfectmarket',
+                filter: ['perfectmarket'],
+                mesures: {
+                    PAGE_HOME: {
+                        TYPE_REQUEST: 1,
+                        TYPE_WEIGHT: 19,
+                    },
+                    PAGE_DA: {
+                        TYPE_REQUEST: 17,
+                        TYPE_WEIGHT: 129,
+                    },
+
+                }
+            },
+            {
+                name: 'pixel facebook',
+                filter: [
+                    'facebook.com/tr',
+                    'connect.facebook.net/signals/config',
+                ],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 1,
@@ -292,6 +292,7 @@ window.data_mesures = [
         list: [
             {
                 name: 'digiteka',
+                filter: ['digiteka'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 0,
@@ -306,6 +307,11 @@ window.data_mesures = [
             },
             {
                 name: 'wibbitz',
+                filter: [
+                    'wibbitz',
+                    'wbtz',
+                    'alooma',
+                ],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 0,
@@ -320,6 +326,10 @@ window.data_mesures = [
             },
             {
                 name: 'invibes',
+                filter: [
+                    'invibes',
+                    'r66net',
+                ],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 0,
@@ -334,6 +344,7 @@ window.data_mesures = [
             },
             {
                 name: 'taboola',
+                filter: ['taboola'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 5,
@@ -348,6 +359,10 @@ window.data_mesures = [
             },
             {
                 name: 'ligatus',
+                filter: [
+                    'ligatus',
+                    'ligadx'
+                ],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 9,
@@ -362,6 +377,7 @@ window.data_mesures = [
             },
             {
                 name: 'teads',
+                filter: ['teads'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 0,
@@ -376,6 +392,7 @@ window.data_mesures = [
             },
             {
                 name: 'GCS',
+                filter: ['survey.g.doubleclick'],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 0,
@@ -389,7 +406,54 @@ window.data_mesures = [
                 }
             },
             {
+                name: 'viewpay',
+                filter: [
+                    'viewpay',
+                    'jokerly',
+                ],
+                mesures: {
+                    PAGE_HOME: {
+                        TYPE_REQUEST: 0,
+                        TYPE_WEIGHT: 0,
+                    },
+                    PAGE_DA: {
+                        TYPE_REQUEST: 1,
+                        TYPE_WEIGHT: 0,
+                    },
+
+                }
+            },
+            {
+                name: 'acpm',
+                filter: ['audience.acpm.fr'],
+                mesures: {
+                    PAGE_HOME: {
+                        TYPE_REQUEST: 1,
+                        TYPE_WEIGHT: 0,
+                    },
+                    PAGE_DA: {
+                        TYPE_REQUEST: 0,
+                        TYPE_WEIGHT: 0,
+                    },
+
+                }
+            },
+            {
                 name: 'DFP',
+                filter: [
+                    'ads',
+                    'googletag-',
+                    'prebid',
+                    'iasPET',
+                    'doubleclick',
+                    'fogl1onf',
+                    'scorecardresearch',
+                    'adfarm',
+                    'googlesyndication',
+                    'pubmatic',
+                    'coll2onf',
+                    'videostep.com',
+                ],
                 mesures: {
                     PAGE_HOME: {
                         TYPE_REQUEST: 70,
@@ -398,6 +462,47 @@ window.data_mesures = [
                     PAGE_DA: {
                         TYPE_REQUEST: 86,
                         TYPE_WEIGHT: 516,
+                    },
+
+                }
+            },
+        ]
+    },
+    {
+        catname: 'html',
+        list: [
+            {
+                name: 'OF',
+                filter: [
+                    'https://www.ouest-france.fr/',
+                    'https://media.ouest-france.fr',
+                    'https://sipaof.mgr.consensu.org',
+                ],
+                mesures: {
+                    PAGE_HOME: {
+                        TYPE_REQUEST: 20,
+                        TYPE_WEIGHT: 483,
+                    },
+                    PAGE_DA: {
+                        TYPE_REQUEST: 30,
+                        TYPE_WEIGHT: 444,
+                    },
+
+                }
+            },
+            {
+                name: 'GTM',
+                filter: [
+                    'https://www.googletagmanager.com/',
+                ],
+                mesures: {
+                    PAGE_HOME: {
+                        TYPE_REQUEST: 1,
+                        TYPE_WEIGHT: 60,
+                    },
+                    PAGE_DA: {
+                        TYPE_REQUEST: 1,
+                        TYPE_WEIGHT: 60,
                     },
 
                 }

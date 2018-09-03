@@ -8,14 +8,7 @@ body {
     background: #f8f4e6;
 }
 
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    -moz-appearance: textfield;
+.input {
     margin: 0;
 }
 
@@ -83,11 +76,22 @@ h1 {
     font-style: normal;
     font-weight: bold;
     color: #d5c9a5;
-    bottom: 0;
+    bottom: 75px;
 }
 .actual-size.has-error {
     z-index: 12;
-    background: rgba(200, 0, 0, 0.3);
+    background: repeating-linear-gradient(45deg, #a11, #a11 10px, #f0f0f0 10px, #f0f0f0 20px);
+}
+.actual-size.has-error::before {
+    border-left: 1px dashed #d5c9a5;
+    content: "";
+    left: 0;
+    bottom: -100px;
+    z-index: 1001;
+    top: 0;
+    width: 1px;
+    height: 100px;
+    display: block;
 }
 .b-cat-list {
     list-style: none;
@@ -110,19 +114,64 @@ h1 {
     height: 75px;
     overflow: hidden;
     transition: all .3s ease-in-out;
-    min-width: 15px;
+    position: relative;
+    min-width: 11px;
+}
+
+.tooltip {
+    width: 50%;
+    background-color: lightgrey;
+    color: #000;
+    text-align: center;
+    border-radius: 6px;
+
+    /* Position the tooltip */
+    position: fixed;
+    z-index: 101;
+    text-align: left;
+    overflow: hidden;
+}
+
+.tooltip li > * {
+    min-width: 100px;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 16px;
+}
+
+.tooltip ul {
+    padding: 10px 25px;
+    list-style-type: none;
+}
+
+.tooltip a {
+    text-overflow: ellipsis;
+    max-width: 600px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .b-cat:hover {
-
+    cursor: help;
+    padding: 0 15px;
+    min-width: 150px;
+    overflow: visible;
+}
+.b-cat:hover label {
+    font-size: 115%;
+    padding: 5px 2px 0;
 }
 .b-cat label {
-    padding-top: 1rem;
+    transition: all .3s ease-in-out;
+    cursor: help;
     font-size: 80%;
     display: block;
     width: 100%;
     text-align: center;
+    overflow: hidden;
+    padding: 1rem 2px 0;
 }
-.b-cat input {
+.b-cat .input {
     display: block;
     border: 0;
     background: none;
@@ -135,14 +184,17 @@ h1 {
     outline: 0;
     transition: background 0.1s ease-in-out;
 }
-.b-cat input:focus {
+.b-cat .input:focus {
     background: rgba(0, 0, 0, 0.1);
 }
 .b-cat-html {
     background: #37393A;
     color: rgba(255, 255, 255, 0.6);
 }
-.b-cat-html input {
+.b-cat-html.odd {
+    background: #262828;
+}
+.b-cat-html .input {
     color: rgba(255, 255, 255, 0.6);
 }
 .b-cat-css {
@@ -171,7 +223,7 @@ h1 {
     background: #5f5f5f;
     color: rgba(255, 255, 255, 0.7);
 }
-.b-cat-ads input {
+.b-cat-ads .input {
     color: rgba(255, 255, 255, 0.7);
 }
 
