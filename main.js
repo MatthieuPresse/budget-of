@@ -2,7 +2,16 @@ $(function(){
 
     window.data_budget_calc = {};
 
-    if(window.data_budget){
+    (function(){
+        return Promise.all([
+            (() => {return fetch('./home.har').then((res) => res.json())})(), 
+            (() => {return fetch('./detail-article.har').then((res) => res.json())})(), 
+        ])
+    })()
+    .then(([PAGE_HOME, PAGE_DA]) => {
+        window['har_data_PAGE_HOME'] = PAGE_HOME;
+        window['har_data_PAGE_DA'] = PAGE_DA;
+
         function _filter(el, item, baseUrl) {
             return item.filter.some((subfilter) => {
                 return el.request.url.includes(subfilter)
@@ -83,40 +92,42 @@ $(function(){
         });
         document.querySelector('#budgets').innerHTML= html;
         console.log('matches:', data_budget_calc)
-    }
 
-    $('.b').each(function(){
-        var scope = $(this);
-        var actualSize = parseInt(scope.find('.actual-size span').text());
+        $('.b').each(function(){
+            var scope = $(this);
+            var actualSize = parseInt(scope.find('.actual-size span').text());
 
-        scope.find('.b-cat .input').each(function(){
-             var $this = $(this),
-                     val = parseInt($this.text());
+            scope.find('.b-cat .input').each(function(){
+                var $this = $(this),
+                        val = parseInt($this.text());
 
-            var categoryWidth = (val/actualSize)*100;
+                var categoryWidth = (val/actualSize)*100;
 
-            $this.parent().width(categoryWidth+'%');
+                $this.parent().width(categoryWidth+'%');
+            });
+
+            var inputs = scope.find('.b-cat .input'),
+                    numInputs = inputs.length,
+                    totalActualSize = 0;
+
+
+            var budgetSize = parseInt(scope.find('.b-size span').text());
+            var actualSize = parseInt(scope.find('.actual-size span').text());
+            var totalSize = actualSize/budgetSize;
+
+            //If actual val is over budget
+            if(totalSize>1) {
+                scope.find('.b-header, .actual-size').addClass('has-error');
+            scope.find('.b-cat-container').width('100%');
+            } else {
+                scope.find('.b-header, .actual-size').removeClass('has-error');
+                scope.find('.b-cat-container').width(totalSize*100+'%');
+            }
+
         });
-
-        var inputs = scope.find('.b-cat .input'),
-                numInputs = inputs.length,
-                totalActualSize = 0;
-
-
-        var budgetSize = parseInt(scope.find('.b-size span').text());
-        var actualSize = parseInt(scope.find('.actual-size span').text());
-        var totalSize = actualSize/budgetSize;
-
-        //If actual val is over budget
-        if(totalSize>1) {
-            scope.find('.b-header, .actual-size').addClass('has-error');
-         scope.find('.b-cat-container').width('100%');
-        } else {
-            scope.find('.b-header, .actual-size').removeClass('has-error');
-            scope.find('.b-cat-container').width(totalSize*100+'%');
-        }
-
+    
     });
+
     var $tooltip = $('.tooltip');
     var tooltip = $tooltip.get(0);
 
