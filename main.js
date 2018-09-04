@@ -1,6 +1,7 @@
 $(function(){
 
     window.data_budget_calc = {};
+    window.missed = [];
 
     (function(){
         return Promise.all([
@@ -55,7 +56,7 @@ $(function(){
                     sum += data_budget_calc[el.page][item.name][el.type];
                 });
             });
-            console.log('Entrées non mappées:', entries.map((el) => [el.request.url, el._initiator]))
+            window.missed[el.page] = entries.map((e) => {return {'url': e.request.url, 'poid': ((e.response.headers.filter((el) => el.name == 'content-length')[0] ? e.response.headers.filter((el) => el.name == 'content-length')[0].value * 1: e.response.content.size) / 1024).toFixed(2)}});
         });
         console.log(data_budget);
         data_budget.forEach(function(el){
@@ -92,6 +93,12 @@ $(function(){
         });
         document.querySelector('#budgets').innerHTML= html;
         console.log('matches:', data_budget_calc)
+
+        document.querySelector('#news').innerHTML= `<p>Test réalisé le `+ new Date(PAGE_HOME.log.pages[0].startedDateTime).toLocaleString('fr-FR', {weekday: "long", year: "numeric", month: "long", day: "numeric", hour12: false, hour: "2-digit", minute: "2-digit"}) +` par la Sonde <em>`+PAGE_HOME.log.browser.name+` `+PAGE_HOME.log.browser.version+`</em> - de `+PAGE_HOME.log.creator.name+` </p>`;
+
+        document.querySelector('#missed').innerHTML= `<p>Des éléments n'ont pas étés matchés; <a href="https://groupe-sipa.slack.com/messages/C9CC18TFS">aidez-nous</a> à les classer si vous en connaissez!</p>
+        <button data-onhover='`+ JSON.stringify(window.missed['PAGE_HOME']) +`'>Voir ceux de la home</button>
+        <button data-onhover='`+ JSON.stringify(window.missed['PAGE_DA']) +`'>Voir ceux du détail article</button>`;
 
         $('.b').each(function(){
             var scope = $(this);
