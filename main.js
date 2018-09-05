@@ -79,7 +79,7 @@ $(function(){
             html = html + `<div class="b">
                     <div class="b-header">
                         <h2 class="b-title">` + el.titre + `</h2>
-                        <em class="actual-size" style="left: ` + (el.budget/sum*100).toFixed(2) + `%;">Réel: <span>` + sum.toFixed(0) + `</span> ` + el.unit + `</em>
+                        <em class="actual-size" style="left: ` + (el.budget/sum*100).toFixed(2) + `%;">Réel: <span>` + sum.toFixed(0) + `</span> ` + el.unit + `<br />Objectif: économiser ` + (sum.toFixed(0) - el.budget) + ` ` + el.unit + `</em>
                     </div><!--end b-header-->
                     <div class="b-budget">
                         <div class="b-cat-container">
@@ -167,8 +167,8 @@ $(function(){
         if($tooltip.width() + (off.left + 10) > window.innerWidth){
             $tooltip.css('left', window.innerWidth - $tooltip.width());
         }
-        if($tooltip.height() + (off.top + 90) > window.innerHeight){
-            $tooltip.css('top', window.innerHeight - $tooltip.height());
+        if($tooltip.height() + (off.top + 90) > $(document).height()){
+            $tooltip.css('top', $(document).height() - $tooltip.height());
         }
     });
 

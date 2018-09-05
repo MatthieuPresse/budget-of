@@ -8,29 +8,181 @@ window.data_budget = [
         titre: 'Home requêtes',
         type: 'TYPE_REQUEST',
         page: 'PAGE_HOME',
-        budget: 75,
-        unit: 'appels'
+        budget: 90,
+        unit: 'appels',
+        compare: [
+            {
+                name: '20 minutes',
+                budget: 234
+            },
+            {
+                name: 'rt.com',
+                budget: 91
+            },
+            {
+                name: 'PWA mobile.francetvinfo.fr',
+                budget: 93
+            },
+            {
+                name: 'LCI',
+                budget: 310
+            },
+            {
+                name: 'Le Parisien',
+                budget: 218
+            },
+            {
+                name: 'L Equipe',
+                budget: 96
+            },
+            {
+                name: 'Le Figaro',
+                budget: 215
+            },
+            {
+                name: 'BFM TV',
+                budget: 323
+            },
+            {
+                name: 'huffingtonpost.fr',
+                budget: 102
+            },
+        ]
     },
     {
         titre: 'Home poids',
         type: 'TYPE_WEIGHT',
         page: 'PAGE_HOME',
         budget: 1500,
-        unit: 'KB'
+        unit: 'KB',
+        compare: [
+            {
+                name: '20 minutes',
+                budget: 1400
+            },
+            {
+                name: 'rt.com',
+                budget: 1300
+            },
+            {
+                name: 'PWA mobile.francetvinfo.fr',
+                budget: 300
+            },
+            {
+                name: 'LCI',
+                budget: 2100
+            },
+            {
+                name: 'Le Parisien',
+                budget: 2300
+            },
+            {
+                name: 'L Equipe',
+                budget: 1600
+            },
+            {
+                name: 'Le Figaro',
+                budget: 2300
+            },
+            {
+                name: 'BFM TV',
+                budget: 3000
+            },
+            {
+                name: 'huffingtonpost.fr',
+                budget: 1600
+            },
+        ]
     },
     {
         titre: 'Détail article requêtes',
         type: 'TYPE_REQUEST',
         page: 'PAGE_DA',
-        budget: 150,
-        unit: 'appels'
+        budget: 180,
+        unit: 'appels',
+        compare: [
+            {
+                name: '20 minutes',
+                budget: 266
+            },
+            {
+                name: 'rt.com',
+                budget: 84
+            },
+            {
+                name: 'PWA mobile.francetvinfo.fr',
+                budget: 77
+            },
+            {
+                name: 'LCI',
+                budget: 302
+            },
+            {
+                name: 'Le Parisien',
+                budget: 555
+            },
+            {
+                name: 'L Equipe',
+                budget: 255
+            },
+            {
+                name: 'Le Figaro',
+                budget: 286
+            },
+            {
+                name: 'BFM TV',
+                budget: 366
+            },
+            {
+                name: 'huffingtonpost.fr',
+                budget: 195
+            },
+        ]
     },
     {
         titre: 'Détail article poids',
         type: 'TYPE_WEIGHT',
         page: 'PAGE_DA',
         budget: 3000,
-        unit: 'KB'
+        unit: 'KB',
+        compare: [
+            {
+                name: '20 minutes',
+                budget: 4000
+            },
+            {
+                name: 'rt.com',
+                budget: 3400
+            },
+            {
+                name: 'PWA mobile.francetvinfo.fr',
+                budget: 161
+            },
+            {
+                name: 'LCI',
+                budget: 2800
+            },
+            {
+                name: 'Le Parisien',
+                budget: 4800
+            },
+            {
+                name: 'L Equipe',
+                budget: 3300
+            },
+            {
+                name: 'Le Figaro',
+                budget: 2500
+            },
+            {
+                name: 'BFM TV',
+                budget: 5400
+            },
+            {
+                name: 'huffingtonpost.fr',
+                budget: 4100
+            },
+        ]
     },
 ]
 window.data_mesures = [
