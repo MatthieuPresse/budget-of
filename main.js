@@ -5,8 +5,8 @@ $(function(){
 
     (function(){
         return Promise.all([
-            (() => {return fetch('./home.har').then((res) => res.json())})(), 
-            (() => {return fetch('./detail-article.har').then((res) => res.json())})(), 
+            (() => {return fetch('./home.har').then((res) => res.json())})(),
+            (() => {return fetch('./detail-article.har').then((res) => res.json())})(),
         ])
     })()
     .then(([PAGE_HOME, PAGE_DA]) => {
@@ -60,19 +60,22 @@ $(function(){
         });
         console.log(data_budget);
         data_budget.forEach(function(el){
-            
+
             var sum = 0;
             var html_mesures = '';
             (data_mesures || []).forEach(function(categorie){
                 var odd = false;
                 (categorie.list || []).forEach(function(item){
-                    sum += data_budget_calc[el.page][item.name][el.type] * 1;
-                    html_mesures += `
-                        <li class="b-cat b-cat-` + categorie.catname + (odd ? ' odd' : '' )+`" data-onhover='`+ JSON.stringify(data_budget_calc[el.page][item.name].matches.map(e => {return {'url': e.request.url, 'poid': ((e.response.headers.filter((el) => el.name == 'content-length')[0] ? e.response.headers.filter((el) => el.name == 'content-length')[0].value * 1: e.response.content.size) / 1024).toFixed(2) }})) +`'>
-                            <label for="ads">` + item.name +`</label>
-                            <span class="input">` + data_budget_calc[el.page][item.name][el.type] * 1 +`</span>
-                        </li>`;
-                    odd = !odd;
+                    var taille = data_budget_calc[el.page][item.name][el.type] * 1
+                    if(taille) {
+                        sum += taille;
+                        html_mesures += `
+                            <li class="b-cat b-cat-` + categorie.catname + (odd ? ' odd' : '' )+`" data-onhover='`+ JSON.stringify(data_budget_calc[el.page][item.name].matches.map(e => {return {'url': e.request.url, 'poid': ((e.response.headers.filter((el) => el.name == 'content-length')[0] ? e.response.headers.filter((el) => el.name == 'content-length')[0].value * 1: e.response.content.size) / 1024).toFixed(2) }})) +`'>
+                                <label for="ads">` + item.name +`</label>
+                                <span class="input">` + taille +`</span>
+                            </li>`;
+                        odd = !odd;
+                    }
                 });
             });
 
@@ -85,7 +88,7 @@ $(function(){
                         <div class="b-cat-container">
                             <ul class="b-cat-list">` + html_mesures + `
                             </ul><!--end b-bar-->
-                            <em class="b-size" style="left: ` + (el.budget/sum*100).toFixed(2) + `%;">Budget: <span>` + el.budget + `</span> ` + el.unit + `</em>
+                            <em class="b-size" style="left: 0;">Budget: <span>` + el.budget + `</span> ` + el.unit + `</em>
                         </div><!--end cat-container-->
                     </div><!--end b-budget-->
                 </div><!--end b-->
@@ -132,7 +135,7 @@ $(function(){
             }
 
         });
-    
+
     });
 
     var $tooltip = $('.tooltip');
@@ -163,7 +166,7 @@ $(function(){
         });
         html += `</ul>`;
         tooltip.innerHTML = html;
-        
+
         if($tooltip.width() + (off.left + 10) > window.innerWidth){
             $tooltip.css('left', window.innerWidth - $tooltip.width());
         }

@@ -227,7 +227,7 @@ window.data_mesures = [
                 filter: ['mediego'],
             },
             {
-                name: 'content square',
+                name: 'contentsquare',
                 filter: ['contentsquare'],
             },
             {
