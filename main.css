@@ -27,6 +27,7 @@ h1 {
 
 .b {
     margin-bottom: 4em;
+    display: inline-block;
 }
 
 .b-header {
@@ -88,14 +89,12 @@ h1 {
 }
 
 .b-budget {
-    background: #eee;
-    background: repeating-linear-gradient(45deg, #555555, #555555 10px, #f0f0f0 10px, #f0f0f0 20px);
     border-radius: 1em;
     box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.08);
     margin-top: 20px;
     position: relative;
 }
-.b-budget::before {
+/*.b-budget::before {
     content: "";
     display: block;
     height: 15px;
@@ -106,7 +105,7 @@ h1 {
     background: #ddd;
     border-radius: 8px;
 }
-
+*/
 .b-cat-container {
     min-width: 210px !important;
     transition: width 0.3s ease-in-out;
@@ -114,10 +113,11 @@ h1 {
 }
 
 .actual-size {
+    display: none;
+
     position: absolute;
     top: 2.3rem;
     right: 0;
-    display: block;
     padding: 0 0.5rem 1rem 0;
     border-right: 1px dashed #d5c9a5;
     font-size: 80%;
@@ -151,13 +151,13 @@ h1 {
     align-items: center;
     border-radius: 1em;
     overflow: hidden;
+    flex-direction: column;
 }
 
 .b-cat {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    flex-direction: row;
+    justify-content: left;
     width: 100%;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.5);
@@ -210,64 +210,56 @@ h1 {
     white-space: nowrap;
     overflow: hidden;
 }
-.b-cat:hover {
-    cursor: help;
-    padding: 0;
-    min-width: 150px;
-    overflow: visible;
+.b-cat {
+    transition: all .3s ease-in-out;
 }
-.b-cat:hover label {
-    font-size: 115%;
-    padding: 5px 2px 0;
+.b-cat:hover {
+    min-height: 40px;
 }
 .b-cat label {
     transition: all .3s ease-in-out;
     cursor: help;
     font-size: 80%;
     display: block;
-    width: 100%;
-    text-align: center;
-    overflow: hidden;
-    padding: 1rem 2px 0;
+    width: auto;
+    text-align: left;
+    padding: 0 2px 0;
 }
 .b-cat .input {
     display: block;
-    border: 0;
-    background: none;
+    width: 40px;
+
+    font-weight: bold;
     color: rgba(0, 0, 0, 0.5);
     text-align: center;
-    font-weight: bold;
-    font-size: 1.3em;
-    width: 100%;
-    padding-bottom: 1rem;
+
+    background: none;
+    border: 0;
     outline: 0;
     transition: background 0.1s ease-in-out;
 }
-.b-cat .input:focus {
-    background: rgba(0, 0, 0, 0.1);
-}
-.b-cat-html {
+.b-cat-html .carre {
     background: #d3d3d3;
 }
-.b-cat-html.odd {
+.b-cat-html.odd .carre {
     background: #e0e0e0;
 }
-.b-cat-stats {
+.b-cat-stats .carre {
     background: #ced868;
 }
-.b-cat-stats.odd {
+.b-cat-stats.odd .carre {
     background: #d7e07d;
 }
-.b-cat-metier {
+.b-cat-metier .carre {
     background: #EBC050;
 }
-.b-cat-metier.odd {
+.b-cat-metier.odd .carre {
     background: #efcc70;
 }
-.b-cat-ads {
+.b-cat-ads .carre {
     background: #EF944D;
 }
-.b-cat-ads.odd {
+.b-cat-ads.odd .carre {
     background: #f9a461;
 }
 
@@ -357,16 +349,16 @@ footer a:hover, footer a:focus {
     .b-title {
         margin: 0 0.2em 25px;
     }
-    .b-size {
+/*    .b-size {
         top: 105px;
-    }
+    }*/
     .tooltip {
         min-width: 80%;
     }
     .tooltip a {
         max-width: calc(100% - 120px);
     }
-    .actual-size {
+/*    .actual-size {
         top: 41px;
-    }
+    }*/
 }

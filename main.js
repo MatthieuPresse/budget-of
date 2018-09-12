@@ -71,8 +71,8 @@ $(function(){
                         sum += taille;
                         html_mesures += `
                             <li class="b-cat b-cat-` + categorie.catname + (odd ? ' odd' : '' )+`" data-onhover='`+ JSON.stringify(data_budget_calc[el.page][item.name].matches.map(e => {return {'url': e.request.url, 'poid': ((e.response.headers.filter((el) => el.name == 'content-length')[0] ? e.response.headers.filter((el) => el.name == 'content-length')[0].value * 1: e.response.content.size) / 1024).toFixed(2) }})) +`'>
+                                <span class="carre input">` + taille +`</span>
                                 <label for="ads">` + item.name +`</label>
-                                <span class="input">` + taille +`</span>
                             </li>`;
                         odd = !odd;
                     }
@@ -113,7 +113,7 @@ $(function(){
 
                 var categoryWidth = (val/actualSize)*100;
 
-                $this.parent().width(categoryWidth+'%');
+                $this.parent().height(categoryWidth * 10 + 'px');
             });
 
             var inputs = scope.find('.b-cat .input'),
@@ -128,10 +128,10 @@ $(function(){
             //If actual val is over budget
             if(totalSize>1) {
                 scope.find('.b-header, .actual-size').addClass('has-error');
-            scope.find('.b-cat-container').width('100%');
+            scope.find('.b-cat-container').height('100%');
             } else {
                 scope.find('.b-header, .actual-size').removeClass('has-error');
-                scope.find('.b-cat-container').width(totalSize*100+'%');
+                scope.find('.b-cat-container').height(totalSize*100+'%');
             }
 
         });
