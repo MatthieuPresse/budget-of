@@ -163,7 +163,6 @@ $(function(){
                     libelles[item.type],
                     {role: 'style'}
                 ]);
-                console.log(data_budget_calc[item.page])
                 Object.entries(data_budget_calc[item.page]).map(function(el){
                     dataBar.push([
                         el[0],
