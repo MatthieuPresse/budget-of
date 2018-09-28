@@ -10,44 +10,17 @@ window.data_budget = [
         page: 'PAGE_HOME',
         budget: 90,
         unit: 'appels',
-        compare: [
-            {
-                name: '20 minutes',
-                budget: 234
-            },
-            {
-                name: 'rt.com',
-                budget: 91
-            },
-            {
-                name: 'PWA mobile.francetvinfo.fr',
-                budget: 93
-            },
-            {
-                name: 'LCI',
-                budget: 310
-            },
-            {
-                name: 'Le Parisien',
-                budget: 218
-            },
-            {
-                name: 'L Equipe',
-                budget: 96
-            },
-            {
-                name: 'Le Figaro',
-                budget: 215
-            },
-            {
-                name: 'BFM TV',
-                budget: 323
-            },
-            {
-                name: 'huffingtonpost.fr',
-                budget: 102
-            },
-        ]
+        compare: {
+            '20 minutes': 234,
+            'rt.com': 91,
+            'PWA mobile.francetvinfo.fr': 93,
+            'LCI': 310,
+            'Le Parisien': 218,
+            'L Equipe': 96,
+            'Le Figaro': 215,
+            'BFM TV': 323,
+            'huffingtonpost.fr': 102,
+        }
     },
     {
         titre: 'Home poids',
@@ -55,44 +28,17 @@ window.data_budget = [
         page: 'PAGE_HOME',
         budget: 1500,
         unit: 'KB',
-        compare: [
-            {
-                name: '20 minutes',
-                budget: 1400
-            },
-            {
-                name: 'rt.com',
-                budget: 1300
-            },
-            {
-                name: 'PWA mobile.francetvinfo.fr',
-                budget: 300
-            },
-            {
-                name: 'LCI',
-                budget: 2100
-            },
-            {
-                name: 'Le Parisien',
-                budget: 2300
-            },
-            {
-                name: 'L Equipe',
-                budget: 1600
-            },
-            {
-                name: 'Le Figaro',
-                budget: 2300
-            },
-            {
-                name: 'BFM TV',
-                budget: 3000
-            },
-            {
-                name: 'huffingtonpost.fr',
-                budget: 1600
-            },
-        ]
+        compare: {
+            '20 minutes': 1400,
+            'rt.com': 1300,
+            'PWA mobile.francetvinfo.fr': 300,
+            'LCI': 2100,
+            'Le Parisien': 2300,
+            'L Equipe': 1600,
+            'Le Figaro': 2300,
+            'BFM TV': 3000,
+            'huffingtonpost.fr': 1600,
+        }
     },
     {
         titre: 'Détail article requêtes',
@@ -100,44 +46,17 @@ window.data_budget = [
         page: 'PAGE_DA',
         budget: 180,
         unit: 'appels',
-        compare: [
-            {
-                name: '20 minutes',
-                budget: 266
-            },
-            {
-                name: 'rt.com',
-                budget: 84
-            },
-            {
-                name: 'PWA mobile.francetvinfo.fr',
-                budget: 77
-            },
-            {
-                name: 'LCI',
-                budget: 302
-            },
-            {
-                name: 'Le Parisien',
-                budget: 555
-            },
-            {
-                name: 'L Equipe',
-                budget: 255
-            },
-            {
-                name: 'Le Figaro',
-                budget: 286
-            },
-            {
-                name: 'BFM TV',
-                budget: 366
-            },
-            {
-                name: 'huffingtonpost.fr',
-                budget: 195
-            },
-        ]
+        compare: {
+            '20 minutes': 266,
+            'rt.com': 84,
+            'PWA mobile.francetvinfo.fr': 77,
+            'LCI': 302,
+            'Le Parisien': 555,
+            'L Equipe': 255,
+            'Le Figaro': 286,
+            'BFM TV': 366,
+            'huffingtonpost.fr': 195,
+        }
     },
     {
         titre: 'Détail article poids',
@@ -145,44 +64,17 @@ window.data_budget = [
         page: 'PAGE_DA',
         budget: 3000,
         unit: 'KB',
-        compare: [
-            {
-                name: '20 minutes',
-                budget: 4000
-            },
-            {
-                name: 'rt.com',
-                budget: 3400
-            },
-            {
-                name: 'PWA mobile.francetvinfo.fr',
-                budget: 161
-            },
-            {
-                name: 'LCI',
-                budget: 2800
-            },
-            {
-                name: 'Le Parisien',
-                budget: 4800
-            },
-            {
-                name: 'L Equipe',
-                budget: 3300
-            },
-            {
-                name: 'Le Figaro',
-                budget: 2500
-            },
-            {
-                name: 'BFM TV',
-                budget: 5400
-            },
-            {
-                name: 'huffingtonpost.fr',
-                budget: 4100
-            },
-        ]
+        compare: {
+            '20 minutes': 4000,
+            'rt.com': 3400,
+            'PWA mobile.francetvinfo.fr': 161,
+            'LCI': 2800,
+            'Le Parisien': 4800,
+            'L Equipe': 3300,
+            'Le Figaro': 2500,
+            'BFM TV': 5400,
+            'huffingtonpost.fr': 4100,
+        }
     },
 ]
 window.data_mesures = [
@@ -216,7 +108,7 @@ window.data_mesures = [
             },
             {
                 name: 'xiti',
-                filter: ['xiti'],
+                filter: ['xiti', 'aticdn', 'akstat.io'],
             },
             {
                 name: 'mpulse',
@@ -344,6 +236,10 @@ window.data_mesures = [
                     'quantserve.com',
                     'omtrdc.net',
                     'tags.bluekai.com',
+                    'bidswitch.net',
+                    'google.com/pagead',
+                    'exelator.com',
+                    'yabidos.com',
                 ],
             },
         ]
