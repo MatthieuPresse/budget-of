@@ -153,12 +153,6 @@ window.data_mesures = [
                     'connect.facebook.net/signals/config',
                 ],
             },
-            {
-                name: 'Omnitag',
-                filter: [
-                    'omnitagjs',
-                ],
-            },
         ]
     },
     {
@@ -240,6 +234,7 @@ window.data_mesures = [
                     'google.com/pagead',
                     'exelator.com',
                     'yabidos.com',
+                    'omnitagjs',
                 ],
             },
         ]
