@@ -85,16 +85,14 @@ $(function(){
             'CAT_NAME': 'catégorie',
         }
 
-        var stackedWidth = 450;
-        var stackedHeight = 600;
-
-
+        var stackedWidth = 250;
+        var stackedHeight = 450;
 
         google.charts.load('current', {packages:['corechart', 'bar']});
         var i =0;
+        var divToAppendTo = document.getElementById('columnchart_material');
         google.charts.setOnLoadCallback(function(){
             data_budget.map(function(item){
-                i++;
                 var data = [];
 
                 data.push([
@@ -116,7 +114,7 @@ $(function(){
                     0,
                 ]);
                 data.push([
-                    libelles[item.type],
+                    '',
                     item.compare['L Equipe'] * 1,
                     item.budget * 1,
                     data_sums_calc[item.page]['html'][item.type],
@@ -138,19 +136,20 @@ $(function(){
                     chartArea: {
                         left: 40,
                         top: 50,
-                        width: stackedWidth - 250,
-                        height: stackedHeight - 200,
+                        width: stackedWidth,
+                        height: stackedHeight,
                     },
                     fontSize: 14,
-                    title: libelles[item.page] + ' par ' + libelles['CAT_NAME'],
-                    width: stackedWidth,
-                    height: stackedHeight,
+                    title: libelles[item.type],
+                    width: stackedWidth + 65,
+                    height: stackedHeight + 75,
                     bar: { groupWidth: '90%' },
                     isStacked: true,
+                    legend: 'none',
                     series: {
                         0:{type: 'line', color:colors['compare']},
                         1:{type: 'line', color:colors['budget']},
-                        2:{type: 'bars', color:colors['html'], labelInLegend: 'Contenu'},
+                        2:{type: 'bars', color:colors['html']},
                         3:{type: 'bars', color:colors['stats']},
                         4:{type: 'bars', color:colors['metier']},
                         5:{type: 'bars', color:colors['ads']},
@@ -174,61 +173,84 @@ $(function(){
                     chartArea: {
                         left: 150,
                         top: 50,
-                        height: stackedHeight - 100,
+                        height: stackedHeight,
+                        width: 900
                     },
                     fontSize: 14,
-                    title: libelles[item.page]+ ' - liste des partenaires',
-                    height: stackedHeight,
-                    width: 1200,
+                    title: libelles[item.type] + ' - détail',
+                    height: stackedHeight + 75,
+                    width: 1075,
+                    legend: 'none',
                     bar: { groupWidth: '45%' },
                 };
 
-                var div= document.createElement('div');
+                var div=null;
+                if(i % 2 == 0) {
+                    div= document.createElement('div');
+                    div.setAttribute('class', 'half boite');
+                    document.getElementById('columnchart_material').appendChild(div);
+                    divToAppendTo = div;
+
+                    div= document.createElement('h2');
+                    div.innerText = libelles[item.page];
+                    divToAppendTo.appendChild(div);
+                }
+
+                var divToAppendToInner = divToAppendTo;
+                div= document.createElement('div');
+                div.setAttribute('class', 'half');
+                divToAppendToInner.appendChild(div);
+                divToAppendToIn = div;
+
+                div= document.createElement('div');
                 div.setAttribute('id', 'column_'+i);
-                div.setAttribute('style', 'width: '+ stackedWidth+ 'px; height: '+ stackedHeight +'px; float:left;');
-                document.getElementById('columnchart_material').appendChild(div);
+                div.setAttribute('class', 'stacked');
+                var chartDiv = div;
+                divToAppendToIn.appendChild(div);
 
-                var div= document.createElement('div');
-                div.setAttribute('id', 'column_'+i+'_detail');
-                div.setAttribute('style', 'width: calc(100% - '+ stackedWidth+ 'px); height: '+ stackedHeight +'px; float:left;');
-                document.getElementById('columnchart_material').appendChild(div);
-                var chartDiv = document.getElementById('column_'+i);
+                div= document.createElement('label');
+                div.setAttribute('class', 'stacked');
+                div.setAttribute('for', 'radio_'+i);
+                div.innerText = 'Voir plus';
+                divToAppendToIn.appendChild(div);
+
+                div= document.createElement('input');
+                div.setAttribute('class', 'stacked');
+                div.setAttribute('id', 'radio_'+i);
+                div.setAttribute('type', 'checkbox');
+                div.setAttribute('name', 'radio_liste');
+                divToAppendToIn.appendChild(div);
+
                 var chart = new google.visualization.ComboChart(chartDiv);
-
-                google.visualization.events.addListener(chart, 'ready', function () {
-                    var rowIndex = -1;  // find first column
-                    var xBeg;    // save first x coord
-                    var xWidth;  // save width of column
-                    // columns
-                    Array.prototype.forEach.call(chartDiv.getElementsByTagName('rect'), function(rect, index) {
-                        if (rect.getAttribute('fill') !== colors['budget'] && rect.getAttribute('fill') !== colors['compare']) {
-                            rowIndex++;
-                            xWidth = parseFloat(rect.getAttribute('width')) / 2;
-                            if (rowIndex === 0) {
-                                xBeg = parseFloat(rect.getAttribute('x'));
-                            }
-                        }
-                    });
-
-                    // reference line
-                    Array.prototype.forEach.call(chartDiv.getElementsByTagName('circle'), function(rect, index) {
-                        if (rect.getAttribute('fill') === colors['budget'] || rect.getAttribute('fill') === colors['compare']) {
-                            // change line coords
-                            var refCoords = rect.getAttribute('d').split(',');
-                            refCoords[0] = 'M' + xBeg;
-                            var refWidth = refCoords[2].split('L');
-                            refWidth[1] = parseFloat(refWidth[1]) + xWidth;
-                            refCoords[2] = refWidth.join('L');
-                            rect.setAttribute('d', refCoords.join(','));
-                        }
-                    });
-                });
-
                 chart.draw(google.visualization.arrayToDataTable(data), options);
 
-                var chartBar = new google.visualization.BarChart(document.getElementById('column_'+i+'_detail'));
+                div= document.createElement('div');
+                div.setAttribute('id', 'column_'+i+'_detail');
+                div.setAttribute('class', 'liste');
+                var chartBarDiv = div;
+                divToAppendToIn.appendChild(div);
+
+                var chartBar = new google.visualization.BarChart(chartBarDiv);
                 chartBar.draw(google.visualization.arrayToDataTable(dataBar), optionsBar);
-            })
+
+                i++;
+            });
+
+            window._calcScroll();
+            $('input').change(function(){
+                window._calcScroll();
+            });
         });
     });
 });
+window._calcScroll = function(){
+    var y = 0;
+    $('#columnchart_material').css('min-width', 10000+ 'px');
+
+    $('.boite').each(function(x){
+        y+= $(this).outerWidth();
+    });
+
+    $('#columnchart_material').css('min-width', (y < $(window).width() ? $(window).width() : y ) + 'px');
+
+};
