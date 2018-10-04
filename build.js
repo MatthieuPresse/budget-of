@@ -28,4 +28,12 @@ var fs = require('fs');
             });
         });
     });
+    fs.createReadStream('./config/data-'+site+'.js').pipe(fs.createWriteStream('./dist/'+site+'/data.js'));
+
+    fs.readdir('./src', function(err, items) {
+        items.map(function(item){
+            fs.createReadStream('./src/'+item).pipe(fs.createWriteStream('./dist/'+site+'/'+item));
+        });
+    });
+
 })
