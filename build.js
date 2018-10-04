@@ -2,7 +2,7 @@ var request = require("request");
 var fs = require('fs');
 
 
-['of','pj'].map(function(site){
+JSON.parse(process.env['siteList']).map(function(site){
     console.log(site + 'ConfigBuild');
     var config = JSON.parse(process.env[site + 'ConfigBuild']);
 

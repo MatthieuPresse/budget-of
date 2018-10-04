@@ -6,10 +6,16 @@
 
 # build
 configuration en variable d environnement
-export configBuild='{"monitoring":[{"id":XXX,"file":"page.har","type_page":"PAGE_XXX"}]}'
-export dareboostApiKey=XXX
+export siteList='[xx]'
+export xxConfigBuild='{"monitoring":[{"id":XXX,"file":"page.har","type_page":"PAGE_XXX"}]}'
+export xxDareboostApiKey=XXX
 
 script à lancer pour regenerer la page
 ```
 npm run build
+```
+
+mode dev
+```
+npm run watch
 ```

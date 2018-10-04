@@ -76,7 +76,7 @@ $(function(){
                         data_budget_calc[el.page][item.name][el.type] * 1;
                 });
             });
-            window.missed[el.page] = entries.map((e) => {return {'url': e.request.url, 'requete': e, 'poid': ((e.response.headers.filter((el) => el.name == 'content-length')[0] ? e.response.headers.filter((el) => el.name == 'content-length')[0].value * 1: e.response.content.size) / 1024).toFixed(2)}});
+            window.missed[el.page] = entries.map((e) => {return {'url': e.request.url, 'poid': ((e.response.headers.filter((el) => el.name == 'content-length')[0] ? e.response.headers.filter((el) => el.name == 'content-length')[0].value * 1: e.response.content.size) / 1024).toFixed(2)}});
         });
 
 
@@ -161,13 +161,29 @@ $(function(){
                 dataBar.push([
                     'Partenaire',
                     libelles[item.type],
-                    {role: 'style'}
+                    {role: 'style'},
+                    {role: 'tooltip', 'p': {'html': true}},
                 ]);
                 Object.entries(data_budget_calc[item.page]).map(function(el){
                     dataBar.push([
                         el[0],
                         el[1][item.type] *1,
-                        colors[el[1].catname]
+                        colors[el[1].catname],
+                        `<div class="tooltip">
+                            <button>Fermer</button>
+                            <p style="margin: 0 0 .5em 0;">Partenaire: <strong>`+el[0]+`</strong></p>
+                            <p style="margin: 0 0 1.5em 0;">`+libelles[item.type]+`: `+el[1][item.type] *1+`</p>
+                            <p style="margin: 0 0 .5em 0;">Liste des appels:
+                                <ul><li>`+
+                                    el[1].matches.map(function(match){
+                                        var poid = ((match.response.headers.filter((el) => el.name == 'content-length')[0] ? match.response.headers.filter((el) => el.name == 'content-length')[0].value * 1: match.response.content.size) / 1024).toFixed(2);
+                                        return `
+                                            <span>`+poid+` KB</span><a href="`+match.request.url+`">`+match.request.url+`</a>
+                                        `;
+                                    }).join('</li><li>')
+                                +`</li></ul>
+                            </p>
+                        </div>`,
                     ]);
                 });
                 var optionsBar = {
@@ -182,6 +198,7 @@ $(function(){
                     height: stackedHeight + 75,
                     width: 1075,
                     legend: 'none',
+                    tooltip: {isHtml: true, trigger: 'selection'},
                     bar: { groupWidth: '45%' },
                 };
 
@@ -232,26 +249,76 @@ $(function(){
                 divToAppendToIn.appendChild(div);
 
                 var chartBar = new google.visualization.BarChart(chartBarDiv);
+                google.visualization.events.addListener(chartBar, 'ready', function (e) {
+                    console.log(chartBar.container);
+                    chartBar.container.addEventListener('click', function(e){
+                        if(e.target.tagName == 'BUTTON') {
+                            chartBar.setSelection([{}]);
+
+                        }
+                    })
+                });
                 chartBar.draw(google.visualization.arrayToDataTable(dataBar), optionsBar);
+
 
                 i++;
             });
 
-            window._calcScroll();
+            var _calcScroll = function(){
+                var y = 0;
+                $('#columnchart_material').css('min-width', 10000+ 'px');
+
+                $('.boite').each(function(x){
+                    y+= $(this).outerWidth();
+                });
+
+                $('#columnchart_material').css('min-width', (y < $(window).width() ? $(window).width() : y ) + 'px');
+
+            };
+
+            _calcScroll();
             $('input').change(function(){
-                window._calcScroll();
+                _calcScroll();
             });
         });
+
+        document.querySelector('#news').innerHTML= `<p>Test réalisé le `+ new Date(hars[0].log.pages[0].startedDateTime).toLocaleString('fr-FR', {weekday: "long", year: "numeric", month: "long", day: "numeric", hour12: false, hour: "2-digit", minute: "2-digit"}) +` par la Sonde <em>`+hars[0].log.browser.name+` `+hars[0].log.browser.version+`</em> - de `+hars[0].log.creator.name+` </p>`;
+
+        var missedHtml = `<p>Des éléments n'ont pas étés matchés; aidez-nous à les classer si vous en connaissez!</p>`;
+        Object.entries(window.missed).map(function(k){
+            missedHtml+= k[1].length ? `<button data-onhover='`+ JSON.stringify(k[1]) +`'>Voir pour la page `+libelles[k[0]]+`</button>` : '';
+
+        });
+        document.querySelector('#missed').innerHTML = missedHtml;
+
+        var $tooltip = $('.tooltip');
+        var tooltip = $tooltip.get(0);
+
+        $(document).on('click', '[data-onhover]', function(e){
+            e.stopPropagation();
+            var data = JSON.parse($(this).attr('data-onhover') || []);
+            if(data.length < 1) return;
+            var off = $(this).offset();
+
+            data.sort((a, b) => parseFloat(b.poid) - parseFloat(a.poid));
+
+            var html = '';
+            html += `<ul>`;
+            data.forEach(function(el){
+                html += `<li><span>`+el.poid+` KB</span><a href="`+el.url+`">`+el.url+`</a></li>`
+
+            });
+            html += `</ul>`;
+            tooltip.innerHTML = html;
+
+        });
+
     });
 });
-window._calcScroll = function(){
-    var y = 0;
-    $('#columnchart_material').css('min-width', 10000+ 'px');
 
-    $('.boite').each(function(x){
-        y+= $(this).outerWidth();
+$(document).ready(function() {
+    $('#columnchart_material').mousewheel(function(e, delta) {
+        $('body').get(0).scrollLeft -= (delta * 85);
+        e.preventDefault();
     });
-
-    $('#columnchart_material').css('min-width', (y < $(window).width() ? $(window).width() : y ) + 'px');
-
-};
+});

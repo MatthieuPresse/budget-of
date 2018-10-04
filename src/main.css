@@ -39,7 +39,7 @@ input.stacked {
 }
 #columnchart_material {
   min-width: 10000px;
-  overflow: auto;
+  overflow: hidden;
 }
 .boite {
   border: 1px solid #2c3e50;
@@ -49,4 +49,41 @@ input.stacked {
   margin-right: 5px;
   width: 30px;
   height: 10px;
+}
+.tooltip {
+  background: #fff;
+  overflow: hidden;
+
+  margin: 0;
+  padding: 1em 1em .5em 1em;
+
+  font-family: Arial;
+  font-size: 14;
+  text-align: left;
+  color: rgb(0, 0, 0);
+}
+.tooltip li > * {
+  min-width: 100px;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 16px;
+}
+.tooltip ul {
+  padding: 10px 25px;
+  list-style-type: none;
+
+  max-height: 330px;
+  overflow: auto;
+}
+.tooltip a {
+  text-overflow: ellipsis;
+  max-width: 530px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.tooltip button {
+  position: absolute;
+  top: 1em;
+  right: 1em;
 }
