@@ -250,7 +250,7 @@ $(function(){
 
                 var chartBar = new google.visualization.BarChart(chartBarDiv);
                 google.visualization.events.addListener(chartBar, 'ready', function (e) {
-                    console.log(chartBar.container);
+                    // console.log(chartBar.container);
                     chartBar.container.addEventListener('click', function(e){
                         if(e.target.tagName == 'BUTTON') {
                             chartBar.setSelection([{}]);
@@ -284,12 +284,14 @@ $(function(){
 
         document.querySelector('#news').innerHTML= `<p>Test réalisé le `+ new Date(hars[0].log.pages[0].startedDateTime).toLocaleString('fr-FR', {weekday: "long", year: "numeric", month: "long", day: "numeric", hour12: false, hour: "2-digit", minute: "2-digit"}) +` par la Sonde <em>`+hars[0].log.browser.name+` `+hars[0].log.browser.version+`</em> - de `+hars[0].log.creator.name+` </p>`;
 
-        var missedHtml = `<p>Des éléments n'ont pas étés matchés; aidez-nous à les classer si vous en connaissez!</p>`;
-        Object.entries(window.missed).map(function(k){
-            missedHtml+= k[1].length ? `<button data-onhover='`+ JSON.stringify(k[1]) +`'>Voir pour la page `+libelles[k[0]]+`</button>` : '';
+        if(Object.entries(window.missed).every(k => k[1].length)) {
+            var missedHtml = `<p>Des éléments n'ont pas étés matchés; aidez-nous à les classer si vous en connaissez!</p>`;
+            Object.entries(window.missed).map(function(k){
+                missedHtml+= k[1].length ? `<button data-onhover='`+ JSON.stringify(k[1]) +`'>Voir pour la page `+libelles[k[0]]+`</button>` : '';
 
-        });
-        document.querySelector('#missed').innerHTML = missedHtml;
+            });
+            document.querySelector('#missed').innerHTML = missedHtml;
+        }
 
         var $tooltip = $('.tooltip');
         var tooltip = $tooltip.get(0);
