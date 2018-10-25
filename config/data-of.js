@@ -1,4 +1,5 @@
 window.colors= {
+    'missed': '#dd4477',
     'ads': '#3366cc',
     'html': '#dc3912',
     'metier': '#ff9900',
@@ -181,6 +182,7 @@ window.data_mesures = [
                     'wibbitz',
                     'wbtz',
                     'alooma',
+                    'vidazoo',
                 ],
             },
             {
@@ -231,8 +233,8 @@ window.data_mesures = [
             {
                 name: 'Prebid - Criteo',
                 filter: [
-                    'bidder.criteo.com',
-                    'static.criteo.net',
+                    'criteo.com',
+                    'criteo.net',
                 ],
             },
             {

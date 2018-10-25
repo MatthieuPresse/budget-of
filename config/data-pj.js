@@ -1,4 +1,5 @@
 window.colors= {
+    'missed': '#dedede',
     'ads': '#3366cc',
     'html': '#dc3912',
     'metier': '#ff9900',

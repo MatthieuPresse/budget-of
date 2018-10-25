@@ -2,7 +2,7 @@ $(function(){
 
     window.data_budget_calc = {};
     window.data_sums_calc = {};
-    window.missed = [];
+    window.missed = {};
 
     var i = 0;
     var type_pages = [];
@@ -46,7 +46,7 @@ $(function(){
             entries = entries.filter((el) => {
                 return el.response.comment != "net::ERR_ABORTED";
             });
-
+            entries = entries.map(match => {match.poid = ((match.response.headers.filter((el) => el.name == 'content-length')[0] ? match.response.headers.filter((el) => el.name == 'content-length')[0].value * 1: match.response.content.size) / 1024).toFixed(2); return match;})
             var baseUrl = entries[0] ? entries[0].request.url : '';
 
             (data_mesures || []).forEach(function(categorie){
@@ -66,9 +66,7 @@ $(function(){
                             l - entries.length
                         :
                             // poid
-                            (matches.reduce(function (acc, el) {
-                                return acc + (el.response.headers.filter((el) => el.name == 'content-length')[0] ? el.response.headers.filter((el) => el.name == 'content-length')[0].value * 1: el.response.content.size);
-                            }, 0) / 1024).toFixed(0);
+                            matches.reduce((acc, el) => acc + el.poid *1, 0);
                     ;
                     data_sums_calc[el.page] = data_sums_calc[el.page] || {};
                     data_sums_calc[el.page][categorie.catname] = data_sums_calc[el.page][categorie.catname] || {};
@@ -76,7 +74,19 @@ $(function(){
                         data_budget_calc[el.page][item.name][el.type] * 1;
                 });
             });
-            window.missed[el.page] = entries.map((e) => {return {'url': e.request.url, 'poid': ((e.response.headers.filter((el) => el.name == 'content-length')[0] ? e.response.headers.filter((el) => el.name == 'content-length')[0].value * 1: e.response.content.size) / 1024).toFixed(2)}});
+
+            window.missed[el.page] = window.missed[el.page] || entries.map((e) => {return {'url': e.request.url, 'poid': e.poid}});
+            data_sums_calc[el.page]['missed'] = data_sums_calc[el.page]['missed'] || {}
+            data_sums_calc[el.page]['missed'][el.type] = el.type == 'TYPE_REQUEST' ?
+                    window.missed[el.page].length
+                :
+                    window.missed[el.page].reduce((acc, el) =>acc + el.poid * 1, 0)
+                ;
+
+            data_budget_calc[el.page]['missed'] =  data_budget_calc[el.page]['missed'] || {};
+            data_budget_calc[el.page]['missed'].matches = entries;
+            data_budget_calc[el.page]['missed'].catname = 'missed';
+            data_budget_calc[el.page]['missed'][el.type] = data_sums_calc[el.page]['missed'][el.type];
         });
 
 
@@ -84,7 +94,6 @@ $(function(){
         console.log('data_budget', data_budget);
         console.log('data_budget_calc', data_budget_calc);
         console.log('data_sums_calc', data_sums_calc);
-        console.log('missed', window.missed);
 
         var stackedWidth = 250;
         var stackedHeight = 450;
@@ -95,7 +104,6 @@ $(function(){
         google.charts.setOnLoadCallback(function(){
             data_budget.map(function(item){
                 var data = [];
-
                 data.push([
                     'Type',
                     'Comparaison',
@@ -104,11 +112,13 @@ $(function(){
                     'Mesure/analyse',
                     'Outil métier/market',
                     'Publicité',
+                    'Non trouvé',
                 ]);
                 data.push([
                     '',
                     item.compare[0] * 1,
                     item.budget * 1,
+                    0,
                     0,
                     0,
                     0,
@@ -122,11 +132,13 @@ $(function(){
                     data_sums_calc[item.page]['stats'][item.type],
                     data_sums_calc[item.page]['metier'][item.type],
                     data_sums_calc[item.page]['ads'][item.type],
+                    data_sums_calc[item.page]['missed'][item.type],
                 ]);
                 data.push([
                     '',
                     item.compare[0] * 1,
                     item.budget * 1,
+                    0,
                     0,
                     0,
                     0,
@@ -154,6 +166,7 @@ $(function(){
                         3:{type: 'bars', color:colors['stats']},
                         4:{type: 'bars', color:colors['metier']},
                         5:{type: 'bars', color:colors['ads']},
+                        6:{type: 'bars', color:colors['missed']},
                     }
                 };
 
@@ -166,8 +179,8 @@ $(function(){
                 ]);
                 Object.entries(data_budget_calc[item.page]).map(function(el){
                     dataBar.push([
-                        el[0],
-                        el[1][item.type] *1,
+                        el[0] == 'missed' ? 'Non trouvé': el[0],
+                        item.type != 'TYPE_REQUEST' && 0 < el[1][item.type]*1 && el[1][item.type]*1 < 5 ? 5 : el[1][item.type] *1,
                         colors[el[1].catname],
                         `<div class="tooltip">
                             <button>Fermer</button>
@@ -175,10 +188,9 @@ $(function(){
                             <p style="margin: 0 0 1.5em 0;">`+libelles[item.type]+`: `+el[1][item.type] *1+`</p>
                             <p style="margin: 0 0 .5em 0;">Liste des appels:
                                 <ul><li>`+
-                                    el[1].matches.map(function(match){
-                                        var poid = ((match.response.headers.filter((el) => el.name == 'content-length')[0] ? match.response.headers.filter((el) => el.name == 'content-length')[0].value * 1: match.response.content.size) / 1024).toFixed(2);
+                                    el[1].matches.sort((a,b) => {return a.poid*1 > b.poid*1 ? -1 : 1}).map(function(match){
                                         return `
-                                            <span>`+poid+` KB</span><a href="`+match.request.url+`">`+match.request.url+`</a>
+                                            <span>`+match.poid+` KB</span><a href="`+match.request.url+`">`+match.request.url+`</a>
                                         `;
                                     }).join('</li><li>')
                                 +`</li></ul>
@@ -283,38 +295,6 @@ $(function(){
         });
 
         document.querySelector('#news').innerHTML= `<p>Test réalisé le `+ new Date(hars[0].log.pages[0].startedDateTime).toLocaleString('fr-FR', {weekday: "long", year: "numeric", month: "long", day: "numeric", hour12: false, hour: "2-digit", minute: "2-digit"}) +` par la Sonde <em>`+hars[0].log.browser.name+` `+hars[0].log.browser.version+`</em> - de `+hars[0].log.creator.name+` </p>`;
-
-        if(Object.entries(window.missed).reduce((k, x) => x + k[1].length)) {
-            var missedHtml = `<p>Des éléments n'ont pas étés matchés; aidez-nous à les classer si vous en connaissez!</p>`;
-            Object.entries(window.missed).map(function(k){
-                missedHtml+= k[1].length ? `<button data-onhover='`+ JSON.stringify(k[1]) +`'>Voir pour la page `+libelles[k[0]]+`</button>` : '';
-
-            });
-            document.querySelector('#missed').innerHTML = missedHtml;
-        }
-
-        var $tooltip = $('.tooltip');
-        var tooltip = $tooltip.get(0);
-
-        $(document).on('click', '[data-onhover]', function(e){
-            e.stopPropagation();
-            var data = JSON.parse($(this).attr('data-onhover') || []);
-            if(data.length < 1) return;
-            var off = $(this).offset();
-
-            data.sort((a, b) => parseFloat(b.poid) - parseFloat(a.poid));
-
-            var html = '';
-            html += `<ul>`;
-            data.forEach(function(el){
-                html += `<li><span>`+el.poid+` KB</span><a href="`+el.url+`">`+el.url+`</a></li>`
-
-            });
-            html += `</ul>`;
-            tooltip.innerHTML = html;
-
-        });
-
     });
 });
 
