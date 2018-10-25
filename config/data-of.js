@@ -107,6 +107,18 @@ window.data_mesures = [
                 filter: ['batch.com'],
             },
             {
+                name: 'mediego',
+                filter: ['mediego'],
+            },
+            {
+                name: 'myfeelback',
+                filter: ['kxcdn'],
+            },
+            {
+                name: 'ownpage',
+                filter: ['ownpage'],
+            },
+            {
                 name: 'revive',
                 filter: ['of-ajs-autopromo.php', 'aquaplatform'],
             },
@@ -128,24 +140,12 @@ window.data_mesures = [
                 filter: ['mpulse'],
             },
             {
-                name: 'mediego',
-                filter: ['mediego'],
-            },
-            {
                 name: 'contentsquare',
                 filter: ['contentsquare'],
             },
             {
                 name: 'datadome',
                 filter: ['datadome'],
-            },
-            {
-                name: 'myfeelback',
-                filter: ['kxcdn'],
-            },
-            {
-                name: 'ownpage',
-                filter: ['ownpage'],
             },
             {
                 name: 'onfocus',
@@ -202,14 +202,6 @@ window.data_mesures = [
                 ],
             },
             {
-                name: 'teads',
-                filter: ['teads'],
-            },
-            {
-                name: 'GCS',
-                filter: ['survey.g.doubleclick'],
-            },
-            {
                 name: 'viewpay',
                 filter: [
                     'viewpay',
@@ -221,21 +213,76 @@ window.data_mesures = [
                 filter: ['audience.acpm.fr'],
             },
             {
-                name: 'DFP',
+                name: 'GCS',
+                filter: ['survey.g.doubleclick'],
+            },
+            {
+                name: 'Prebid - Adyoulike',
                 filter: [
+                    'hb-api.omnitagjs.com',
+                ],
+            },
+            {
+                name: 'Prebid - Appnexus',
+                filter: [
+                    'ib.adnxs.com',
+                ],
+            },
+            {
+                name: 'Prebid - Criteo',
+                filter: [
+                    'bidder.criteo.com',
+                    'static.criteo.net',
+                ],
+            },
+            {
+                name: 'Prebid - Rubicon',
+                filter: [
+                    'fastlane.rubiconproject.com',
+                ],
+            },
+            {
+                name: 'Prebid - Smart',
+                filter: [
+                    'www14.smartadserver.com//prebid/v1',
+                ],
+            },
+            {
+                name: 'Pub - onfocus',
+                filter: [
+                    'coll2onf',
+                    'fogl1onf',
+                ],
+            },
+            {
+                name: 'Pub - IAS',
+                filter: [
+                    'adsafeprotected',
+                ],
+            },
+            {
+                name: 'Pub - GPT',
+                filter: [
+                    'googletagservices.com/tag/js/gpt.js',
+                ],
+            },
+            {
+                name: 'Pub - teads',
+                filter: ['teads'],
+            },
+            {
+                name: 'Pub - DFP',
+                filter: [
+                    'securepubads',
+                    'doubleclick',
+                    'googlesyndication',
                     'ads',
                     'googletag-',
                     'prebid',
-                    'iasPET',
-                    'doubleclick',
-                    'fogl1onf',
                     'scorecardresearch',
                     'adfarm',
-                    'googlesyndication',
                     'pubmatic',
-                    'coll2onf',
                     'videostep.com',
-                    'googletagservices.com/tag/js/gpt.js',
                     'storygize.net',
                     'bttrack.com',
                     'server.exposebox.com',

@@ -8,6 +8,8 @@ JSON.parse(process.env['siteList']).map(function(site){
 
     console.log('ApiKey: ', process.env[site + 'DareboostApiKey']);
     console.log('Configuration: ', config);
+    console.log('######');
+    console.log('');
 
     fs.writeFile('./dist/'+site+'/config.js', 'window.configBuild = ' + process.env[site + 'ConfigBuild'], 'utf8', function(){
         (config.monitoring).map(function(el){
@@ -19,10 +21,10 @@ JSON.parse(process.env['siteList']).map(function(site){
                     "monitoringId": el.id
                 }
             }, function (error, response, body) {
-                if (!error && response.statusCode === 200) {
+                if (!error && response.statusCode === 200 && body.status == 200) {
                     request(body.report.harFileUrl).pipe(fs.createWriteStream('./dist/'+site+'/'+el.file));
                 } else {
-                    console.log("Err: ", error);
+                    console.log("Err: ",el.id, error, body);
                     process.exit(1);
                 }
             });
