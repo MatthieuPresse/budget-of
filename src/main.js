@@ -239,10 +239,12 @@ $(function(){
                 divToAppendToIn.appendChild(div);
 
                 div= document.createElement('label');
-                div.setAttribute('class', 'stacked');
                 div.setAttribute('for', 'radio_'+i);
                 div.innerText = 'Voir plus';
-                divToAppendToIn.appendChild(div);
+                div2= document.createElement('button');
+                div2.setAttribute('class', 'stacked');
+                div2.appendChild(div);
+                divToAppendToIn.appendChild(div2);
 
                 div= document.createElement('input');
                 div.setAttribute('class', 'stacked');

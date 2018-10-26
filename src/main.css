@@ -24,14 +24,19 @@ h1 {
 :checked + .liste {
   display: inline-block;
 }
-label.stacked {
+button.stacked {
   position: absolute;
   display: inline-block;
   left: 350px;
   top: 50%;
   margin-right: 0;
-  width: 30px;
+  width: 40px;
+  padding: 0;
   transform: translateY(-50%);
+}
+button.stacked label {
+  padding: 5px;
+  display: block;
 }
 input.stacked {
   display: none;
