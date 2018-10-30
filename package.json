@@ -24,8 +24,10 @@
     "request": "^2.88.0"
   },
   "dependencies": {
+    "async": "^2.6.1",
     "aws-sdk": "^2.342.0",
     "browserify": "^16.2.3",
+    "requestretry": "^3.0.2",
     "xmlhttprequest": "^1.8.0"
   }
 }

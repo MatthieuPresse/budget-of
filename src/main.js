@@ -274,14 +274,14 @@ $(function(){
                                 chartArea: {
                                     left: 40,
                                     top: 50,
-                                    width: 600,
+                                    width: 1100,
                                     height: 600,
                                 },
                                 pointSize: 5,
                                 fontSize: 14,
-                                width: 600+45,
-                                height: 600 + 175,
-                                legend: null,
+                                width: 1500,
+                                height: 775,
+                                legend: true,
                                 series: [
                                     {color:colors['metier']},
                                     {color:colors['stats']},
@@ -299,7 +299,7 @@ $(function(){
                     }
                 };
 
-                request.open('GET', 'https://abz9qip3q4.execute-api.us-east-2.amazonaws.com/Stage/getItems?params='+encodeURI(JSON.stringify({"type":"perf-"+site+"-"+item.page+"-"+item.type,"s1":new Date().getTime() - 1 * 1000 * 60 * 60 * 24 * 31, "s2":new Date().getTime()})), true);
+                request.open('GET', 'https://abz9qip3q4.execute-api.us-east-2.amazonaws.com/Stage/getItems?params='+encodeURI(JSON.stringify({"type":"perf-"+site+"-"+item.page+"-"+item.type,"s1":new Date().getTime() - 1 * 1000 * 60 * 60 * 24 * 180, "s2":new Date().getTime()})), true);
                 request.setRequestHeader('Content-Type', 'application/json');
                 request.send();
 
