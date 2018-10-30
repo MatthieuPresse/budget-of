@@ -34,13 +34,15 @@ JSON.parse(process.env['siteList']).forEach(site => {
                 "dateFrom": args.from ? new Date(args.from).toISOString() : new Date((new Date().getTime()) - 1 * 1000 * 60 * 60).toISOString(),
                 "dateTo": args.to ? new Date(args.to).toISOString() : new Date(new Date().getTime() * 1).toISOString(),
                 // "dateTo": new Date('2018-10-28T00:00:00.000+0100').toISOString(),
-                "error": false // only executions without error
+                "error": false, // only executions without error
+                "limit": 0,
             }
         }, function (error, response, body) {
             if (!error && response.statusCode === 200 && body.status == 200) {
                 // For each report
                 body.monitoringData.forEach(monitoring => {
-                    console.log('request', monitoring.id);
+                    if(monitoring.score < 0) return;
+                    console.log('request', site, ConfigBuild.id ,monitoring.id);
                     // monitoring.id;
                     request({
                         url: 'https://www.dareboost.com/api/0.5/analysis/report',
