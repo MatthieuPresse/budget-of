@@ -1,5 +1,6 @@
 var request = require("request");
 var fs = require('fs');
+var browserify = require('browserify')
 
 
 JSON.parse(process.env['siteList']).map(function(site){
@@ -37,5 +38,9 @@ JSON.parse(process.env['siteList']).map(function(site){
             fs.createReadStream('./src/'+item).pipe(fs.createWriteStream('./dist/'+site+'/'+item));
         });
     });
+
+    var bundleFs = fs.createWriteStream('./dist/'+site+'/bundle.js');
+    var b = browserify('./dist/'+site+'/main.js');
+    b.bundle().pipe(bundleFs);
 
 })
