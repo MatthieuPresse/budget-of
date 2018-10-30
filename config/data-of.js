@@ -1,4 +1,5 @@
 module.exports = {
+    site: 'of',
     colors: {
         'missed': '#dd4477',
         'ads': '#3366cc',

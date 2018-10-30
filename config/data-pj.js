@@ -1,4 +1,5 @@
 module.exports = {
+    site: 'pj',
     colors: {
         'missed': '#dedede',
         'ads': '#3366cc',

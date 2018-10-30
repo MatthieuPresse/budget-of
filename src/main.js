@@ -6,9 +6,10 @@ $(function(){
     missed = {};
     var colors = config.colors;
     var libelles = config.libelles;
-    var data_budget = config.data_budget
-    var colors = config.colors
-    var data_mesures = config.data_mesures
+    var data_budget = config.data_budget;
+    var colors = config.colors;
+    var site = config.site;
+    var data_mesures = config.data_mesures;
 
     var i = 0;
     var type_pages = [];
