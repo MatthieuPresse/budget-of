@@ -15,6 +15,12 @@ JSON.parse(process.env['siteList']).forEach(site => {
     console.log('Configuration: ', config);
     console.log('######');
     console.log('');
+    var args = {};
+    process.argv.splice(process.execArgv.length + 2).forEach(item => {
+        if (item.charAt('=') > -1) {
+            args[item.slice('=')[0]] = item.slice('=')[1];
+        }
+    });
 
     (config.monitoring).forEach(ConfigBuild => {
         request({
@@ -23,8 +29,8 @@ JSON.parse(process.env['siteList']).forEach(site => {
             json: {
                 "token": process.env[site + 'DareboostApiKey'],
                 "monitoringId": ConfigBuild.id,
-                "dateFrom": "2018-10-21T00:00:00.000+0100",
-                "dateTo": "2018-10-28T23:59:59.999+0100",
+                "dateFrom": args.from ? new Date(args.from).toISOString() : new Date((new Date().getTime()) - 1 * 1000 * 60 * 60).toISOString(),
+                "dateTo": args.to ? new Date(args.to).toISOString() : new Date(new Date().getTime() * 1).toISOString(),
                 // "dateTo": new Date('2018-10-28T00:00:00.000+0100').toISOString(),
                 "error": false // only executions without error
             }

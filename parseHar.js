@@ -37,18 +37,22 @@ module.exports = function(entries, config, budget) {
             var matches = entries.filter((el) => { return _filter(el, item, baseUrl) } );
             // ceux qui restent
             entries = entries.filter((el) => { return !_filter(el, item, baseUrl) } );
-
-
-            data_sums_calc[budget.page] = data_sums_calc[budget.page] || {};
-            data_sums_calc[budget.page][categorie.catname] = data_sums_calc[budget.page][categorie.catname] || {};
-            data_sums_calc[budget.page][categorie.catname][budget.type] = (typeof data_sums_calc[budget.page][categorie.catname][budget.type] == 'undefined' ? 0 : data_sums_calc[budget.page][categorie.catname][budget.type]) +
-                (budget.type == 'TYPE_REQUEST' ?
+            data_budget_calc[budget.page] = data_budget_calc[budget.page] || {};
+            data_budget_calc[budget.page][item.name] = data_budget_calc[budget.page][item.name] || {};
+            data_budget_calc[budget.page][item.name].matches = matches;
+            data_budget_calc[budget.page][item.name].catname = categorie.catname;
+            data_budget_calc[budget.page][item.name][budget.type] = budget.type == 'TYPE_REQUEST' ?
                     // nombre de requetes
                     l - entries.length
                 :
                     // poid
-                    matches.reduce((acc, el) => acc + el.poid *1, 0)
-                ).toFixed(2) * 1;
+                    matches.reduce((acc, el) => acc + el.poid *1, 0);
+            ;
+            data_sums_calc[budget.page] = data_sums_calc[budget.page] || {};
+            data_sums_calc[budget.page][categorie.catname] = data_sums_calc[budget.page][categorie.catname] || {};
+            data_sums_calc[budget.page][categorie.catname][budget.type] = (typeof data_sums_calc[budget.page][categorie.catname][budget.type] == 'undefined' ? 0 : data_sums_calc[budget.page][categorie.catname][budget.type]) +
+                data_budget_calc[budget.page][item.name][budget.type] * 1;
+            data_sums_calc[budget.page][categorie.catname][budget.type] = Number.parseFloat(data_sums_calc[budget.page][categorie.catname][budget.type]).toFixed(2) * 1;
         });
     });
 
@@ -59,6 +63,11 @@ module.exports = function(entries, config, budget) {
         :
             missed[budget.page].reduce((acc, el) =>acc + el.poid * 1, 0)
         ;
+
+    data_budget_calc[budget.page]['missed'] =  data_budget_calc[budget.page]['missed'] || {};
+    data_budget_calc[budget.page]['missed'].matches = entries;
+    data_budget_calc[budget.page]['missed'].catname = 'missed';
+    data_budget_calc[budget.page]['missed'][budget.type] = data_sums_calc[budget.page]['missed'][budget.type];
 
     return {
         data_budget_calc: data_budget_calc,
