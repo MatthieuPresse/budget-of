@@ -1,5 +1,6 @@
 $(function(){
     config = require('./data.js');
+    var site ="of";
     data_budget_calc = {};
     data_sums_calc = {};
     missed = {};
@@ -106,46 +107,10 @@ $(function(){
         google.charts.setOnLoadCallback(function(){
             data_budget.map(function(item){
                 var data = [];
-                data.push([
-                    'Type',
-                    'Comparaison',
-                    'Objectif',
-                    'Site',
-                    'Mesure/analyse',
-                    'Outil métier/market',
-                    'Publicité',
-                    'Non trouvé',
-                ]);
-                data.push([
-                    '',
-                    item.compare[0] * 1,
-                    item.budget * 1,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                ]);
-                data.push([
-                    '',
-                    item.compare[0] * 1,
-                    item.budget * 1,
-                    data_sums_calc[item.page]['html'][item.type],
-                    data_sums_calc[item.page]['stats'][item.type],
-                    data_sums_calc[item.page]['metier'][item.type],
-                    data_sums_calc[item.page]['ads'][item.type],
-                    data_sums_calc[item.page]['missed'][item.type],
-                ]);
-                data.push([
-                    '',
-                    item.compare[0] * 1,
-                    item.budget * 1,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                ]);
+                data.push(['Type', 'Comparaison', 'Objectif', 'Site', 'Mesure/analyse', 'Outil métier/market', 'Publicité', 'Non trouvé',]);
+                data.push(['', item.compare[0] * 1, item.budget * 1, 0, 0, 0, 0, 0,]);
+                data.push(['', item.compare[0] * 1, item.budget * 1, data_sums_calc[item.page]['html'][item.type], data_sums_calc[item.page]['stats'][item.type], data_sums_calc[item.page]['metier'][item.type], data_sums_calc[item.page]['ads'][item.type], data_sums_calc[item.page]['missed'][item.type],]);
+                data.push(['', item.compare[0] * 1, item.budget * 1, 0, 0, 0, 0, 0,]);
 
                 var options = {
                     chartArea: {
@@ -275,6 +240,67 @@ $(function(){
                     })
                 });
                 chartBar.draw(google.visualization.arrayToDataTable(dataBar), optionsBar);
+
+
+                var chartHistoDiv= document.createElement('div');
+                chartHistoDiv.setAttribute('class', 'half boite');
+                document.getElementById('historique').appendChild(chartHistoDiv);
+
+                var request = new XMLHttpRequest();
+                request.onreadystatechange = function(event) {
+                    // XMLHttpRequest.DONE === 4
+                    if (this.readyState === XMLHttpRequest.DONE) {
+                        if (this.status === 200) {
+                            var dataBar = [['Date', 'Outils métier/market', 'Mesure/analyse', 'Publicité', 'Site', 'Non trouvé']];
+                            JSON.parse(this.responseText).forEach(res => {
+                                var data = JSON.parse(res.data.S);
+                                dataBar.push([
+                                    new Date(res.timestamp.N * 1).toLocaleString('fr-FR', {day: "numeric", month: "numeric", year: "2-digit", hour12: false, hour: "2-digit", minute: "2-digit"}),
+                                    data['metier'][item.type],
+                                    data['stats'][item.type],
+                                    data['ads'][item.type],
+                                    data['html'][item.type],
+                                    data['missed'][item.type],
+                                ]);
+                            })
+                            var data = google.visualization.arrayToDataTable(dataBar);
+
+                            var options = {
+                                title: libelles[item.page]+' '+libelles[item.type],
+                                hAxis: {title: 'Date',  titleTextStyle: {color: '#333'}},
+                                vAxis: {minValue: 0},
+
+                                chartArea: {
+                                    left: 40,
+                                    top: 50,
+                                    width: 600,
+                                    height: 600,
+                                },
+                                pointSize: 5,
+                                fontSize: 14,
+                                width: 600+45,
+                                height: 600 + 175,
+                                legend: null,
+                                series: [
+                                    {color:colors['metier']},
+                                    {color:colors['stats']},
+                                    {color:colors['ads']},
+                                    {color:colors['html']},
+                                    {color:colors['missed']},
+                                ]
+                            };
+
+                            var chart = new google.visualization.AreaChart(chartHistoDiv);
+                            chart.draw(data, options);
+                        } else {
+                            console.log("Status de la réponse: %d (%s)", this.status, this.statusText);
+                        }
+                    }
+                };
+
+                request.open('GET', 'https://abz9qip3q4.execute-api.us-east-2.amazonaws.com/Stage/getItems?params='+encodeURI(JSON.stringify({"type":"perf-"+site+"-"+item.page+"-"+item.type,"s1":new Date().getTime() - 1 * 1000 * 60 * 60 * 24 * 31, "s2":new Date().getTime()})), true);
+                request.setRequestHeader('Content-Type', 'application/json');
+                request.send();
 
 
                 i++;

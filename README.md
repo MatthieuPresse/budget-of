@@ -19,3 +19,8 @@ mode dev
 ```
 npm run watch
 ```
+
+genere l'historique
+```
+npm run historique from="2018-10-20 13:00" to="2018-10-30 13:00"
+```

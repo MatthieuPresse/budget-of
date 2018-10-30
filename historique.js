@@ -17,8 +17,10 @@ JSON.parse(process.env['siteList']).forEach(site => {
     console.log('');
     var args = {};
     process.argv.splice(process.execArgv.length + 2).forEach(item => {
-        if (item.charAt('=') > -1) {
-            args[item.slice('=')[0]] = item.slice('=')[1];
+        // Usage
+        // npm run historique from="2018-10-20 13:00" to="2018-10-30 13:00"
+        if (item.indexOf('=') > -1) {
+            args[item.split('=')[0]] = item.split('=')[1];
         }
     });
 
