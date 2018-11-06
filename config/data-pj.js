@@ -16,6 +16,11 @@ module.exports = {
         'TYPE_REQUEST': 'Nombre d\'appels réseau',
         'TYPE_WEIGHT': 'Poid (Kilo octets)',
         'CAT_NAME': 'catégorie',
+        'html': 'Site',
+        'stats': 'Mesure/analyse',
+        'metier': 'Outils métier/market',
+        'ads': 'Publicité',
+        'missed': 'Non trouvé',
     },
     data_budget: [
         {

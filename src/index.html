@@ -1,5 +1,7 @@
 <html>
 <head>
+    <meta name="language" content="French">
+    <meta http-equiv="content-language" content="fr-FR">
 
     <link rel="stylesheet" href="main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -14,6 +16,34 @@
 <body>
     <h1>Performance Budget</h1>
     <div id="columnchart_material"></div>
+
+
+    <h2>Historique</h2>
+    <form action="">
+        <h3>Filtres</h3>
+        <p>
+            <label>Du: <input type="datetime-local" name="from"></label>
+        </p>
+        <p>
+            <label>Au: <input type="datetime-local" name="to"></label>
+        </p>
+        <p>
+            <label>Catégories
+                <select name="cat" multiple style="width: 200px; height: 100px;">
+                    <option value="missed" selected >Non trouvé</option>
+                    <option value="ads" selected >Publicité</option>
+                    <option value="metier" selected >Outil "métier"</option>
+                    <option value="stats" selected >Mesure / analyse</option>
+                    <option value="html" selected >Site</option>
+                </select>
+            </label>
+        </p>
+        <p>
+            <label>
+                <input type="submit" value="Filtrer">
+            </label>
+        </p>
+    </form>
     <div id="historique"></div>
 
     <div id="infos" class="half">

@@ -18,6 +18,38 @@ $(function(){
         i++;
     });
 
+    function pad(number) {
+        if ( number < 10 ) {
+            return '0' + number;
+        }
+        return number;
+    }
+    Date.prototype.toInputDateString = function() {
+      return this.getFullYear() +
+        '-' + pad( this.getMonth() + 1 ) +
+        '-' + pad( this.getDate() ) +
+        'T' + pad( this.getHours() ) +
+        ':' + pad( this.getMinutes() );
+    };
+
+    var urlParams = new URL(window.location).searchParams;
+    var _cat = urlParams.getAll("cat");
+    var _from = urlParams.get("from");
+    var _to = urlParams.get("to");
+
+    _to = new Date(_to ? _to : Date.now());
+    _from = new Date(_from ? _from : _to.getTime() - 1 * 1000 * 60 * 60 * 24 * 30); // 30 jours par défaut;
+
+    if(!_cat.length) {
+        _cat = [
+            'html',
+            'stats',
+            'metier',
+            'ads',
+            'missed',
+        ];
+    }
+
     (function(){
         return Promise.all(
             window.configBuild.monitoring.map(function(monitoring){
@@ -248,21 +280,39 @@ $(function(){
                 document.getElementById('historique').appendChild(chartHistoDiv);
 
                 var request = new XMLHttpRequest();
+                var _possibleCats = [
+                    'html',
+                    'stats',
+                    'metier',
+                    'ads',
+                    'missed',
+                ];
                 request.onreadystatechange = function(event) {
                     // XMLHttpRequest.DONE === 4
                     if (this.readyState === XMLHttpRequest.DONE) {
                         if (this.status === 200) {
-                            var dataBar = [['Date', 'Outils métier/market', 'Mesure/analyse', 'Publicité', 'Site', 'Non trouvé']];
+                            var dataBar = [['Date']];
+                            var col3 = [];
+
+                            _possibleCats.forEach(el => {
+                                if(_cat.indexOf(el) > -1) {
+                                    dataBar[0].push(libelles[el]);
+                                }
+                            });
+
                             JSON.parse(this.responseText).forEach(res => {
                                 var data = JSON.parse(res.data.S);
-                                dataBar.push([
+                                var col2 = [
                                     new Date(res.timestamp.N * 1).toLocaleString('fr-FR', {day: "numeric", month: "numeric", year: "2-digit", hour12: false, hour: "2-digit", minute: "2-digit"}),
-                                    data['metier'][item.type],
-                                    data['stats'][item.type],
-                                    data['ads'][item.type],
-                                    data['html'][item.type],
-                                    data['missed'][item.type],
-                                ]);
+                                ];
+
+                                _possibleCats.forEach(el => {
+                                    if(_cat.indexOf(el) > -1) {
+                                        col2.push(data[el][item.type]);
+                                    }
+                                });
+
+                                dataBar.push(col2);
                             })
                             var data = google.visualization.arrayToDataTable(dataBar);
 
@@ -282,11 +332,12 @@ $(function(){
                                 width: 1500,
                                 height: 775,
                                 legend: true,
+                                isStacked: true,
                                 series: [
-                                    {color:colors['metier']},
-                                    {color:colors['stats']},
-                                    {color:colors['ads']},
                                     {color:colors['html']},
+                                    {color:colors['stats']},
+                                    {color:colors['metier']},
+                                    {color:colors['ads']},
                                     {color:colors['missed']},
                                 ]
                             };
@@ -299,7 +350,8 @@ $(function(){
                     }
                 };
 
-                request.open('GET', 'https://abz9qip3q4.execute-api.us-east-2.amazonaws.com/Stage/getItems?params='+encodeURI(JSON.stringify({"type":"perf-"+site+"-"+item.page+"-"+item.type,"s1":new Date().getTime() - 1 * 1000 * 60 * 60 * 24 * 180, "s2":new Date().getTime()})), true);
+                request.open('GET', 'https://abz9qip3q4.execute-api.us-east-2.amazonaws.com/Stage/getItems?params='+
+                    encodeURI(JSON.stringify({"type":"perf-"+site+"-"+item.page+"-"+item.type,"s1":_from.getTime(), "s2":_to.getTime()})), true);
                 request.setRequestHeader('Content-Type', 'application/json');
                 request.send();
 
@@ -327,11 +379,18 @@ $(function(){
 
         document.querySelector('#news').innerHTML= `<p>Test réalisé le `+ new Date(hars[0].log.pages[0].startedDateTime).toLocaleString('fr-FR', {weekday: "long", year: "numeric", month: "long", day: "numeric", hour12: false, hour: "2-digit", minute: "2-digit"}) +` par la Sonde <em>`+hars[0].log.browser.name+` `+hars[0].log.browser.version+`</em> - de `+hars[0].log.creator.name+` </p>`;
     });
-});
 
-$(document).ready(function() {
-    $('#columnchart_material').mousewheel(function(e, delta) {
-        $('body').get(0).scrollLeft -= (delta * 85);
-        e.preventDefault();
+    $(document).ready(function() {
+        $('#columnchart_material').mousewheel(function(e, delta) {
+            $('body').get(0).scrollLeft -= (delta * 85);
+            e.preventDefault();
+        });
+        $('input[name=from').val(_from.toInputDateString());
+        $('input[name=to').val(_to.toInputDateString());
+        $('select[name=cat] option').each(function(el){
+            var $e = $(this);
+            $($e.prop('selected', _cat.indexOf($e.val()) > -1));
+        })
     });
+
 });
