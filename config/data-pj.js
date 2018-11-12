@@ -27,40 +27,52 @@ module.exports = {
             titre: 'Home requêtes',
             type: 'TYPE_REQUEST',
             page: 'PAGE_HOME',
-            budget: 90,
+            budget: 95,
             unit: 'appels',
             compare: [
-                96, // doctlib
+                101, // yellowpages.ca
+                25, // doctlib
+                107, // lafourchette
+                55, // bing
             ],
         },
         {
             titre: 'Home poids',
             type: 'TYPE_WEIGHT',
             page: 'PAGE_HOME',
-            budget: 1500,
+            budget: 1200,
             unit: 'KB',
             compare: [
-                1600, // doctlib
+                1300, // yellowpages.ca
+                1100, // doctlib
+                2000, // lafourchette
+                523, // bing
             ],
         },
         {
             titre: 'Liste résultats requêtes',
             type: 'TYPE_REQUEST',
             page: 'PAGE_LISTE',
-            budget: 90,
+            budget: 115,
             unit: 'appels',
             compare: [
-                96, // doctlib
+                118, // yellowpages.ca
+                66, // doctlib
+                119, // lafourchette
+                175, // bing
             ],
         },
         {
             titre: 'Liste résultats poids',
             type: 'TYPE_WEIGHT',
             page: 'PAGE_LISTE',
-            budget: 1500,
+            budget: 1000,
             unit: 'KB',
             compare: [
-                1600, // doctlib
+                1100, // yellowpages.ca
+                1500, // doctlib
+                1600, // lafourchette
+                1500, // bing
             ],
         },
         {
@@ -70,17 +82,23 @@ module.exports = {
             budget: 90,
             unit: 'appels',
             compare: [
-                96, // doctlib
+                93, // yellowpages.ca
+                33, // doctlib
+                118, // lafourchette
+                201, // bing
             ],
         },
         {
             titre: 'Fiche détaillée poids',
             type: 'TYPE_WEIGHT',
             page: 'PAGE_FD',
-            budget: 3000,
+            budget: 1100,
             unit: 'KB',
             compare: [
-                3300, // doctlib
+                1200, // yellowpages.ca
+                1200, // doctlib
+                1600, // lafourchette
+                1700, // bing
             ],
         },
     ],
@@ -133,10 +151,13 @@ module.exports = {
                         'iasPET',
                         'doubleclick',
                         'fogl1onf',
+                        'staticps.pagesjaunes.fr',
+                        'outbrain',
                         'scorecardresearch',
                         'adfarm',
                         'googlesyndication',
                         'pubmatic',
+                        'rubicon',
                         'coll2onf',
                         'videostep.com',
                         'googletagservices.com/tag/js/gpt.js',
