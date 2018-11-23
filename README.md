@@ -12,12 +12,12 @@ export xxDareboostApiKey=XXX
 
 script à lancer pour regenerer la page
 ```
-npm run build
+yarn build
 ```
 
 mode dev
 ```
-npm run watch
+yarn watch
 ```
 
 genere l'historique

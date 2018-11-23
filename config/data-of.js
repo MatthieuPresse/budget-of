@@ -165,6 +165,10 @@ module.exports = {
                     filter: ['perfectmarket'],
                 },
                 {
+                    name: 'sipa cmp',
+                    filter: ['https://cmp.aws-sipa.ouest-france.fr/prod/v1/cmp'],
+                },
+                {
                     name: 'pixelfacebook',
                     filter: [
                         'facebook.com/tr',
@@ -244,13 +248,13 @@ module.exports = {
                 {
                     name: 'Prebid - Rubicon',
                     filter: [
-                        'fastlane.rubiconproject.com',
+                        'rubiconproject.com',
                     ],
                 },
                 {
                     name: 'Prebid - Smart',
                     filter: [
-                        'www14.smartadserver.com//prebid/v1',
+                        'smartadserver.com',
                     ],
                 },
                 {
@@ -294,6 +298,9 @@ module.exports = {
                         'server.exposebox.com',
                         'hello.lqm.io',
                         'quantserve.com',
+                        'cloudfront.net/native/',
+                        '.cloudfront.net/',
+                        'createjs.com/createjs',
                         'omtrdc.net',
                         'tags.bluekai.com',
                         'bidswitch.net',
@@ -301,6 +308,14 @@ module.exports = {
                         'exelator.com',
                         'yabidos.com',
                         'omnitagjs',
+                        'mdn.net',
+                        'google.ie',
+                        'advertising.com',
+                        'crwdcntrl.net',
+                        'yahoo.com',
+                        'turn.com',
+                        'liadm.com',
+                        'rlcdn.com',
                     ],
                 },
             ]
@@ -313,7 +328,13 @@ module.exports = {
                     filter: [
                         'https://www.ouest-france.fr/',
                         'https://media.ouest-france.fr',
+                    ],
+                },
+                {
+                    name: 'sipa cmp',
+                    filter: [
                         'https://sipaof.mgr.consensu.org',
+                        'vendorlist.consensu.org/vendorlist.json',
                     ],
                 },
                 {
