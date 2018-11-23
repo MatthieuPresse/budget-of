@@ -292,7 +292,6 @@ $(function(){
                     if (this.readyState === XMLHttpRequest.DONE) {
                         if (this.status === 200) {
                             var dataBar = [['Date']];
-                            var col3 = [];
 
                             _possibleCats.forEach(el => {
                                 if(_cat.indexOf(el) > -1) {
