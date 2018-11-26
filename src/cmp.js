@@ -21,8 +21,8 @@ $(function(){
     _to = new Date(_to ? _to : Date.now());
     _from = new Date(_from ? _from : _to.getTime() - 1 * 1000 * 60 * 60 * 24 * 30); // 30 jours par défaut;
 
-    $('input[name=from').val(_from.toInputDateString());
-    $('input[name=to').val(_to.toInputDateString());
+    $('input[name=from]').val(_from.toInputDateString());
+    $('input[name=to]').val(_to.toInputDateString());
 
     // AJAX
     var colors = {
