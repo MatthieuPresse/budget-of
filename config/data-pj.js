@@ -163,6 +163,8 @@ module.exports = {
                         'googletagservices.com/tag/js/gpt.js',
                         'storygize.net',
                         'bttrack.com',
+                        'ligatus',
+                        'lqmcdn',
                         'server.exposebox.com',
                         'hello.lqm.io',
                         'quantserve.com',
