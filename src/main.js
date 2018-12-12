@@ -178,8 +178,9 @@ $(function(){
                     {role: 'tooltip', 'p': {'html': true}},
                 ]);
                 Object.entries(data_budget_calc[item.page]).map(function(el){
+                    console.log((el[0] == 'missed' ? 'Non trouvé': el[0]));
                     dataBar.push([
-                        el[0] == 'missed' ? 'Non trouvé': el[0],
+                        '' + (el[0] == 'missed' ? 'Non trouvé': el[0]),
                         item.type != 'TYPE_REQUEST' && 0 < el[1][item.type]*1 && el[1][item.type]*1 < 5 ? 5 : el[1][item.type] *1,
                         colors[el[1].catname],
                         `<div class="tooltip">
@@ -198,20 +199,21 @@ $(function(){
                         </div>`,
                     ]);
                 });
+                console.log(google.visualization.arrayToDataTable(dataBar));
                 var optionsBar = {
                     chartArea: {
                         left: 150,
                         top: 50,
-                        height: stackedHeight,
+                        height: stackedHeight + 175,
                         width: 900
                     },
                     fontSize: 14,
                     title: libelles[item.type] + ' - détail',
-                    height: stackedHeight + 75,
+                    height: stackedHeight + 275,
                     width: 1075,
                     legend: 'none',
                     tooltip: {isHtml: true, trigger: 'selection'},
-                    bar: { groupWidth: '45%' },
+                    bar: { groupWidth: '25%' },
                 };
 
                 var div=null;

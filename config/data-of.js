@@ -182,7 +182,7 @@ module.exports = {
             list: [
                 {
                     name: 'digiteka',
-                    filter: ['digiteka'],
+                    filter: ['digiteka', 'ultimedia'],
                 },
                 {
                     name: 'wibbitz',
@@ -273,7 +273,7 @@ module.exports = {
                 {
                     name: 'Pub - GPT',
                     filter: [
-                        'googletagservices.com/tag/js/gpt.js',
+                        'googletagservices.com',
                     ],
                 },
                 {
@@ -315,7 +315,11 @@ module.exports = {
                         'yahoo.com',
                         'turn.com',
                         'liadm.com',
+                        'celtra.com',
                         'rlcdn.com',
+                        'adServer',
+                        'pixel',
+                        'realm=ayl',
                     ],
                 },
             ]

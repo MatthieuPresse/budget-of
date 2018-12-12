@@ -18,7 +18,7 @@ h1 {
 }
 .liste {
   float: left;
-  display: none;
+  /*display: none;*/
   padding-left: 2em;
 }
 :checked + .liste {
