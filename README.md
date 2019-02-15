@@ -29,15 +29,20 @@ npm run historique from="2018-10-20 13:00" to="2018-10-30 13:00"
 
 build.js recupere les rapports, extrait l'information et lance la construction du site avec les assets
 > lancé par `yarn build`
+
 watch.js rejoue la construction des assets lors d'un modif
 > lancé par `yarn watch`
+
 historique.js parse *le* rapport pour historique en base dynamo aws (via une gateway)
 > lancé par un cron zappier toutes les heures
+
 
 src/index.html affiche le rapport parsé, et l'historique des perfs
 src/main.js sert à parer le rapport et intérroger la gateway aws qui récupère les infos d'historique de perfs
 
+
 config/data-`*`.js sont les scripts de configurations à chaque site configuré en variable d environnement `siteList`
+
 
 src/cmp.html est une page spécifique cmp qui affiche les informations stockées par https://gitlab.ouest-france.fr/sipa-ouest-france/infrastructure/lambda/infrastructure-app-cmp/tree/cmp-v2
 src/cmp.js sert à requeter la gateway aws qui intéroge l'historique cmp
