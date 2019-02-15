@@ -24,7 +24,7 @@ mode dev
 yarn watch
 ```
 
-genere l'historique
+rattrapage de l'historique
 ```
 npm run historique from="2018-10-20 13:00" to="2018-10-30 13:00"
 ```
