@@ -29,7 +29,7 @@ genere l'historique
 npm run historique from="2018-10-20 13:00" to="2018-10-30 13:00"
 ```
 
-## infos
+### infos
 
 build.js recupere les rapports, extrait l'information et lance la construction du site avec les assets
 > lancé par `yarn build`
