@@ -7,7 +7,7 @@ configs['ofConfigSite']= require('./config/data-of.js');
 configs['pjConfigSite']= require('./config/data-pj.js');
 
 
-console.log(process.env['INCOMING_HOOK_BODY']);
+if(process.env['INCOMING_HOOK_BODY'] != 'PSI-DAILY') return;
 
 
 JSON.parse(process.env['siteList']).forEach(site => {
