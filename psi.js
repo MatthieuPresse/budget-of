@@ -66,6 +66,8 @@ JSON.parse(process.env['siteList']).forEach(site => {
     });
 
     Promise.all(promise).then(function(values) {
+        if(!results.length) return;
+
         request({
                 url: 'https://zv1hfnc4bg.execute-api.eu-west-3.amazonaws.com/prod/psi_historique',
                 method: 'POST',
