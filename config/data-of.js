@@ -12,15 +12,18 @@ module.exports = {
     psi: [
         {
             nom: 'ouest france',
-            url: 'https://www.ouest-france.fr/'
+            url: 'https://www.ouest-france.fr/',
+            monitor: '8460'
         },
         {
             nom: 'francetvinfo',
-            url: 'https://www.francetvinfo.fr/'
+            url: 'https://www.francetvinfo.fr/',
+            monitor: '8478'
         },
         {
             nom: 'le monde',
-            url: 'https://www.lemonde.fr/'
+            url: 'https://www.lemonde.fr/',
+            monitor: '8469'
         },
         {
             nom: 'huffingtonpost',
@@ -32,11 +35,13 @@ module.exports = {
         },
         {
             nom: 'figaro',
-            url: 'http://www.lefigaro.fr/'
+            url: 'http://www.lefigaro.fr/',
+            monitor: '8496'
         },
         {
             nom: '20 minutes',
-            url: 'https://www.20minutes.fr/'
+            url: 'https://www.20minutes.fr/',
+            monitor: '8487'
         },
         {
             nom: 'lequipe',

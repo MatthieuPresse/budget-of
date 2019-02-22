@@ -3,7 +3,7 @@ var fs       = require('fs');
 var configs  = [];
 var results  = [];
 var url      = require('url');
-// var syncRequest = require('sync-request');
+var syncRequest = require('sync-request');
 
 configs['ofConfigSite']= require('./config/data-of.js');
 configs['pjConfigSite']= require('./config/data-pj.js');
@@ -86,39 +86,42 @@ JSON.parse(process.env['siteList']).forEach(site => {
         }));
     });
 
-    // promise.push(new Promise(function(resolve, reject) {
+    promise.push(new Promise(function(resolve, reject) {
+        var dareboost = 'https://www.dareboost.com/api/0.5/monitoring/last-report'
+        console.log('url dareboost', dareboost);
 
-    //     psi.forEach(function(psi_conf){
-    //         var dareboost = 'https://www.dareboost.com/api/0.5/analysis/launch'
-    //         console.log('url dareboost', dareboost);
+        psi.forEach(function(psi_conf){
+            if(!psi_conf.monitor) return;
 
-    //         try {
-    //             var opts = {
-    //                 json: {
-    //                     "token": process.env['artwaiDareboostApiKey'],
-    //                     "url": psi_conf.url,
-    //                     "browser": {
-    //                         "name": "Galaxy S6"
-    //                     }
-    //                 }
-    //             };
-    //             console.log(opts);
-    //             response = syncRequest('POST', dareboost, opts);
+            console.log('fetch dareboost monitoring last-report', site, psi_conf.monitor, process.env[site + 'DareboostApiKey'])
+            try {
+                var opts = {
+                    json: {
+                        "token": process.env[site + 'DareboostApiKey'],
+                        "monitoringId": psi_conf.monitor,
+                        "metricsOnly": true
+                    }
+                };
+                // console.log(opts);
+                var response = syncRequest('POST', dareboost, opts);
+                var body = JSON.parse(response.body.toString('utf8'))
 
-    //             console.log('#### parsed dareboost', site, psi_conf.url, response.body.toString('utf8'));
+                console.log('#### parsed dareboost speedIndex', site, psi_conf.url, body.report.timings.speedIndex);
+                console.log('#### parsed dareboost TTFB', site, psi_conf.url, body.report.timings.firstByte);
 
-    //             results[psi_conf.url] = (results[psi_conf.url] || {});
-    //             results[psi_conf.url].dareboost = body;
+                results[psi_conf.url] = (results[psi_conf.url] || {});
+                results[psi_conf.url].speedindex = body.report.timings.speedIndex;
+                results[psi_conf.url].ttfb = body.report.timings.firstByte;
 
-    //         } catch (error) {
-    //             console.log("Err getting dareboost: ", site, dareboost, error, error.statusCode, error.body);
-    //             reject();
-    //             process.exit(1);
-    //         }
-    //     });
-    //     resolve();
+            } catch (error) {
+                console.log("Err getting dareboost: ", site, dareboost, error, error.statusCode, error.body);
+                reject();
+                process.exit(1);
+            }
+        });
+        resolve();
 
-    // }));
+    }));
 
 
     Promise.all(promise).then(function(values) {
