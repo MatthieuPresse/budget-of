@@ -2,6 +2,7 @@ var request = require("request");
 var fs = require('fs');
 var browserify = require('browserify')
 
+if(process.env['INCOMING_HOOK_BODY'] == 'PSI-DAILY') return;
 
 JSON.parse(process.env['siteList']).map(function(site){
     console.log(site + 'ConfigBuild');

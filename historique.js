@@ -8,6 +8,8 @@ var configs  = [];
 configs['ofConfigSite']= require('./config/data-of.js');
 configs['pjConfigSite']= require('./config/data-pj.js');
 
+if(process.env['INCOMING_HOOK_BODY'] == 'PSI-DAILY') return;
+
 JSON.parse(process.env['siteList']).forEach(site => {
     console.log(site + 'ConfigBuild');
     var config = JSON.parse(process.env[site + 'ConfigBuild']);
