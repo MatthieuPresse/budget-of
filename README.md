@@ -11,6 +11,7 @@ configuration en variable d environnement
 export siteList='[xx]'
 export xxConfigBuild='{"monitoring":[{"id":XXX,"file":"page.har","type_page":"PAGE_XXX"}]}'
 export xxDareboostApiKey=XXX
+export googlePsiApiKey=XXX
 ```
 
 

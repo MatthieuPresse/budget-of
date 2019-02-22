@@ -9,6 +9,48 @@ module.exports = {
         'budget': '#ff0000',
         'compare': '#00ff00',
     },
+    psi: [
+        {
+            nom: 'ouest france',
+            url: 'https://www.ouest-france.fr/'
+        },
+        {
+            nom: 'francetvinfo',
+            url: 'https://www.francetvinfo.fr/'
+        },
+        {
+            nom: 'le monde',
+            url: 'https://www.lemonde.fr/'
+        },
+        {
+            nom: 'huffingtonpost',
+            url: 'https://www.huffingtonpost.fr/'
+        },
+        {
+            nom: 'l express',
+            url: 'https://www.lexpress.fr/'
+        },
+        {
+            nom: 'figaro',
+            url: 'http://www.lefigaro.fr/'
+        },
+        {
+            nom: '20 minutes',
+            url: 'https://www.20minutes.fr/'
+        },
+        {
+            nom: 'lequipe',
+            url: 'https://www.lequipe.fr/'
+        },
+        {
+            nom: 'lepoint',
+            url: 'https://www.lepoint.fr/'
+        },
+        {
+            nom: 'voix du nord',
+            url: 'http://www.lavoixdunord.fr/'
+        }
+    ],
     libelles: {
         'PAGE_HOME': 'Une mobile',
         'PAGE_DA': 'Détail article mobile',
