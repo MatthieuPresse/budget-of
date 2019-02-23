@@ -46,7 +46,7 @@ $(function(){
                 JSON.parse(this.responseText).forEach(res => {
                     var data = JSON.parse(res.data.S);
                     document.getElementById('date').innerHTML = new Date(1550934544832).toLocaleDateString() + ' à ' + new Date(1550934544832).toLocaleTimeString() ;
-
+                    document.getElementById('scorecard').setAttribute('href', 'https://www.thinkwithgoogle.com/feature/mobile/?country=France&network=3G&domains=' + data.map(el => el.url.replace('www.', '').replace('https://', '').replace('http://', '').replace('/', '')).join(','));
                     console.log("data", data);  
 
                     var _table = [
@@ -57,7 +57,7 @@ $(function(){
                       }).forEach(d => {
                         _table.push(
                             [
-                                d.url.replace('www.', '').replace('https://', '').replace('http://', ''),
+                                d.url.replace('www.', '').replace('https://', '').replace('http://', '').replace('/', ''),
                                 d.fcp||0 *1,
                                 d.fid||0 *1,
                                 d.scorecard||0 *1,
