@@ -1,7 +1,6 @@
 var request  = require("requestretry");
 var fs       = require('fs');
 var configs  = [];
-var results  = [];
 var url      = require('url');
 var syncRequest = require('sync-request');
 
@@ -13,10 +12,10 @@ if(process.env['INCOMING_HOOK_BODY'] != 'PSI-DAILY') return;
 
 
 JSON.parse(process.env['siteList']).forEach(site => {
+    var results  = [];
     console.log(site + 'ConfigBuild');
 
-    console.log('ApiKey: ', process.env['googleApiKey']);
-    console.log('######');
+    console.log('###### recupere les     donnes psi, scorecard et dareboost pour le site', site);
     console.log('');
 
     var psi = configs[site+'ConfigSite'].psi || [];
@@ -60,7 +59,7 @@ JSON.parse(process.env['siteList']).forEach(site => {
         }));
 
         promise.push(new Promise(function(resolve, reject) {
-            var scorecard = 'https://gweb-mobile-web-hub.appspot.com/feature/mobile/api/site?domain='+new url.parse(psi_conf.url).hostname.replace('www.', '')+'&network=3G&country=France';
+            var scorecard = 'https://gweb-mobile-web-hub.appspot.com/feature/mobile/api/site?domain='+new url.parse(psi_conf.url).hostname.replace('www.', '')+'&network=3G&country=' + ( psi_conf.url.substr(psi_conf.url.length - 4)== '.ca/' ? 'United%20States' : 'France');
             console.log('url scorecard', scorecard);
 
             request({
@@ -68,12 +67,20 @@ JSON.parse(process.env['siteList']).forEach(site => {
                 method: 'GET'
             }, function (error, response, body) {
                 if (!error && response.statusCode === 200) {
-                    var body = JSON.parse(body.replace(")]}',", "").trim());
-                    console.log('#### parsed scorecard', site, psi_conf.url, body.speed);
+                    try {
+                        
+                        var body = JSON.parse(body.replace(")]}',", "").trim());
+                        console.log('#### parsed scorecard', site, psi_conf.url, body.speed);
 
-                    results[psi_conf.url] = (results[psi_conf.url] || {});
-                    results[psi_conf.url].scorecard = body.speed;
-                    resolve();
+                        results[psi_conf.url] = (results[psi_conf.url] || {});
+                        results[psi_conf.url].scorecard = body.speed;
+                        resolve();
+                    } catch (err) {
+                        console.log(psi_conf.url.substr(psi_conf.url.length - 3) )
+                        console.log("error parsing scorecard result for ", scorecard)
+                        reject("error parsing scorecard result for ", scorecard);
+                    }
+
 
                 } else {
                     console.log(body)
@@ -83,6 +90,10 @@ JSON.parse(process.env['siteList']).forEach(site => {
 
                 }
             });
+        })
+        .catch(function(rej) {
+          //here when you reject the promise
+          console.log(rej);
         }));
     });
 

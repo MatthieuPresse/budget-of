@@ -15,6 +15,11 @@ fs.watch('./src', function(etype, filename){
                 var b = browserify('./dist/'+site+'/main.js');
                 b.bundle().pipe(bundleFs);
             }
+            if('pagespeed-insight.js' == filename) {
+                var bundleFs = fs.createWriteStream('./dist/'+site+'/bundle-psi.js');
+                var b = browserify('./dist/'+site+'/pagespeed-insight.js');
+                b.bundle().pipe(bundleFs);
+            }
         });
         console.log('File copied.');
 

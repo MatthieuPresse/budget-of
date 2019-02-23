@@ -44,4 +44,8 @@ JSON.parse(process.env['siteList']).map(function(site){
     var b = browserify('./dist/'+site+'/main.js');
     b.bundle().pipe(bundleFs);
 
+    var PbundleFs = fs.createWriteStream('./dist/'+site+'/bundle-psi.js');
+    var Pb = browserify('./dist/'+site+'/pagespeed-insight.js');
+    Pb.bundle().pipe(PbundleFs);
+
 })

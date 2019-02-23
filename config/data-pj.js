@@ -9,6 +9,30 @@ module.exports = {
         'budget': '#ff0000',
         'compare': '#00ff00',
     },
+    psi: [
+        {
+            nom: 'pages jaunes',
+            url: 'https://www.pagesjaunes.fr/',
+            monitor: '8752'
+        },
+        {
+            nom: 'yellowpages ca',
+            url: 'https://www.yellowpages.ca/'
+        },
+        {
+            nom: 'doctolib',
+            url: 'https://www.doctolib.fr/'
+        },
+        {
+            nom: 'lafourchette',
+            url: 'https://www.lafourchette.com/'
+        },
+        {
+            nom: 'bing',
+            url: 'https://www.bing.com/',
+            monitor: '9393'
+        }
+    ],
     libelles: {
         'PAGE_HOME': 'Une mobile',
         'PAGE_FD': 'Fiche détaillée mobile',
