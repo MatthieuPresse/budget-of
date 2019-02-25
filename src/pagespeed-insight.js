@@ -45,9 +45,9 @@ $(function(){
             if (this.status === 200) {
                 JSON.parse(this.responseText).forEach(res => {
                     var data = JSON.parse(res.data.S);
-                    document.getElementById('date').innerHTML = new Date(1550934544832).toLocaleDateString() + ' à ' + new Date(1550934544832).toLocaleTimeString() ;
+                    document.getElementById('date').innerHTML = new Date(res.timestamp.N * 1).toLocaleDateString() + ' à ' + new Date(res.timestamp.N * 1).toLocaleTimeString() ;
                     document.getElementById('scorecard').setAttribute('href', 'https://www.thinkwithgoogle.com/feature/mobile/?country=France&network=3G&domains=' + data.map(el => el.url.replace('www.', '').replace('https://', '').replace('http://', '').replace('/', '')).join(','));
-                    console.log("data", data);  
+                    // console.log("data", data);
 
                     var _table = [
                        ["Site", "FCP", "FID", "scorecard", "SpeedIndex", "TTFB"]
@@ -65,7 +65,7 @@ $(function(){
                                 d.ttfb||0 *1,
                             ],
                         );
-    
+
                     });
 
                     var DataTable = google.visualization.arrayToDataTable(_table);
