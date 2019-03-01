@@ -6,6 +6,8 @@ var syncRequest = require('sync-request');
 
 configs['ofConfigSite']= require('./config/data-of.js');
 configs['pjConfigSite']= require('./config/data-pj.js');
+configs['redConfigSite']= require('./config/data-red.js');
+configs['sfrConfigSite']= require('./config/data-sfr.js');
 
 
 if(process.env['INCOMING_HOOK_BODY'] != 'PSI-DAILY') return;
@@ -98,14 +100,10 @@ JSON.parse(process.env['siteList']).forEach(site => {
     });
 
     promise.push(new Promise(function(resolve, reject) {
-        var dareboost = 'https://www.dareboost.com/api/0.5/monitoring/last-report'
-        console.log('url dareboost', dareboost);
+        var dareboost = 'https://www.dareboost.com/api/0.5/monitoring/last-report';
 
         psi.forEach(function(psi_conf){
-            if(!psi_conf.monitor) return;
-
-            console.log('fetch dareboost monitoring last-report', site, psi_conf.monitor, process.env[site + 'DareboostApiKey'])
-            try {
+            if(psi_conf.monitor){
                 var opts = {
                     json: {
                         "token": process.env[site + 'DareboostApiKey'],
@@ -113,6 +111,21 @@ JSON.parse(process.env['siteList']).forEach(site => {
                         "metricsOnly": true
                     }
                 };
+            } else {
+                if(!psi_conf.report) return;
+
+                var opts = {
+                    json: {
+                        "token": process.env[site + 'DareboostApiKey'],
+                        "reportId": psi_conf.report,
+                    }
+                };
+                var dareboost = 'https://www.dareboost.com/api/0.5/analysis/report';
+            }
+            console.log('url dareboost', dareboost);
+
+            console.log('fetch dareboost monitoring last-report', site, psi_conf.monitor || psi_conf.report, process.env[site + 'DareboostApiKey'])
+            try {
                 // console.log(opts);
                 var response = syncRequest('POST', dareboost, opts);
                 var body = JSON.parse(response.body.toString('utf8'))

@@ -14,7 +14,7 @@ JSON.parse(process.env['siteList']).map(function(site){
     console.log('');
 
     fs.writeFile('./dist/'+site+'/config.js', 'window.configBuild = ' + process.env[site + 'ConfigBuild'], 'utf8', function(){
-        (config.monitoring).map(function(el){
+        (config.monitoring || []).map(function(el){
             request({
                 url: 'https://www.dareboost.com/api/0.5/monitoring/last-report',
                 method: "POST",
@@ -31,6 +31,25 @@ JSON.parse(process.env['siteList']).map(function(site){
                 }
             });
         });
+
+        (config.reporting || []).map(function(el){
+            request({
+                url: 'https://www.dareboost.com/api/0.5/analysis/report',
+                method: "POST",
+                json: {
+                    "token": process.env[site + 'DareboostApiKey'],
+                    "reportId": el.id
+                }
+            }, function (error, response, body) {
+                if (!error && response.statusCode === 200 && body.status == 200) {
+                    request(body.report.harFileUrl).pipe(fs.createWriteStream('./dist/'+site+'/'+el.file));
+                } else {
+                    console.log("Err: ",el.id, error, body);
+                    process.exit(1);
+                }
+            });
+        });
+
     });
     fs.createReadStream('./config/data-'+site+'.js').pipe(fs.createWriteStream('./dist/'+site+'/data.js'));
 

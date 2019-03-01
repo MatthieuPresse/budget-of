@@ -7,6 +7,8 @@ var configs  = [];
 
 configs['ofConfigSite']= require('./config/data-of.js');
 configs['pjConfigSite']= require('./config/data-pj.js');
+configs['redConfigSite']= require('./config/data-red.js');
+configs['sfrConfigSite']= require('./config/data-sfr.js');
 
 if(process.env['INCOMING_HOOK_BODY'] == 'PSI-DAILY') return;
 
@@ -27,7 +29,7 @@ JSON.parse(process.env['siteList']).forEach(site => {
         }
     });
 
-    (config.monitoring).forEach(ConfigBuild => {
+    (config.monitoring ||[]).forEach(ConfigBuild => {
         request({
             url: 'https://www.dareboost.com/api/0.5/monitoring/reports',
             method: "POST",

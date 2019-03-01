@@ -13,7 +13,7 @@ $(function(){
 
     var i = 0;
     var type_pages = [];
-    var liste_type = window.configBuild.monitoring.map(function(monitoring){
+    var liste_type = (window.configBuild.monitoring || window.configBuild.reporting || []).map(function(monitoring){
         type_pages[monitoring.type_page] = i;
         i++;
     });
@@ -52,7 +52,7 @@ $(function(){
 
     (function(){
         return Promise.all(
-            window.configBuild.monitoring.map(function(monitoring){
+            (window.configBuild.monitoring || window.configBuild.reporting || []).map(function(monitoring){
                 return fetch(monitoring.file).then(function(res){ return res.json()});
             })
         )
@@ -142,7 +142,13 @@ $(function(){
                 var data = [];
                 data.push(['Type', 'Comparaison', 'Objectif', 'Site', 'Mesure/analyse', 'Outil métier/market', 'Publicité', 'Non trouvé',]);
                 data.push(['', item.compare[0] * 1, item.budget * 1, 0, 0, 0, 0, 0,]);
-                data.push(['', item.compare[0] * 1, item.budget * 1, data_sums_calc[item.page]['html'][item.type], data_sums_calc[item.page]['stats'][item.type], data_sums_calc[item.page]['metier'][item.type], data_sums_calc[item.page]['ads'][item.type], data_sums_calc[item.page]['missed'][item.type],]);
+                data.push(['', item.compare[0] * 1, item.budget * 1, 
+                    data_sums_calc[item.page]['html'] ? data_sums_calc[item.page]['html'][item.type] : 0, 
+                    data_sums_calc[item.page]['stats'] ? data_sums_calc[item.page]['stats'][item.type] : 0, 
+                    data_sums_calc[item.page]['metier'] ? data_sums_calc[item.page]['metier'][item.type] : 0, 
+                    data_sums_calc[item.page]['ads'] ? data_sums_calc[item.page]['ads'][item.type] : 0, 
+                    data_sums_calc[item.page]['missed'] ? data_sums_calc[item.page]['missed'][item.type] : 0,
+                ]);
                 data.push(['', item.compare[0] * 1, item.budget * 1, 0, 0, 0, 0, 0,]);
 
                 var options = {
@@ -301,7 +307,10 @@ $(function(){
                                 }
                             });
 
-                            JSON.parse(this.responseText).forEach(res => {
+                            var resultats = JSON.parse(this.responseText);
+                            if(resultats.length == 0) return;
+                            
+                            resultats.forEach(res => {
                                 var data = JSON.parse(res.data.S);
                                 var col2 = [
                                     new Date(res.timestamp.N * 1).toLocaleString('fr-FR', {day: "numeric", month: "numeric", year: "2-digit", hour12: false, hour: "2-digit", minute: "2-digit"}),
