@@ -70,7 +70,7 @@ JSON.parse(process.env['siteList']).forEach(site => {
             }, function (error, response, body) {
                 if (!error && response.statusCode === 200) {
                     try {
-                        
+
                         var body = JSON.parse(body.replace(")]}',", "").trim());
                         console.log('#### parsed scorecard', site, psi_conf.url, body.speed);
 
@@ -111,6 +111,7 @@ JSON.parse(process.env['siteList']).forEach(site => {
                         "metricsOnly": true
                     }
                 };
+                dareboost = 'https://www.dareboost.com/api/0.5/monitoring/last-report';
             } else {
                 if(!psi_conf.report) return;
 
@@ -120,7 +121,7 @@ JSON.parse(process.env['siteList']).forEach(site => {
                         "reportId": psi_conf.report,
                     }
                 };
-                var dareboost = 'https://www.dareboost.com/api/0.5/analysis/report';
+                dareboost = 'https://www.dareboost.com/api/0.5/analysis/report';
             }
             console.log('url dareboost', dareboost);
 
